@@ -1,13 +1,14 @@
 /* ==========================================================================
    Brightwell University — demo content (modelled on the Oxford site)
-   Free imagery: Unsplash (Unsplash License). Free video: CC0.
+   Free imagery: Unsplash (Unsplash License). Free video: Pixabay (Pixabay
+   Content License, royalty-free). All links are stable public hotlinks.
    ========================================================================== */
 
 const u = (id, w = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 export const VIDEO = {
-  ambient: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+  ambient: 'https://cdn.pixabay.com/video/2019/02/16/21472-318172509_large.mp4',
 };
 
 export const IMG = {
@@ -23,11 +24,11 @@ export const IMG = {
   microscope: u('photo-1581092160562-40aa08e78837'),
   tutoring: u('photo-1456513080510-7bf3a84b82f8'),
   campusLawn: u('photo-1592280771190-3e2e4d571952'),
-  studentsWalking: u('photo-1523050854058-8df90110c9f1'),
+  studentsWalking: u('photo-1543269865-cbf427effbad'),
   writing: u('photo-1517842645767-c639042777db'),
   conference: u('photo-1544531586-fde5298cdd40'),
   city: u('photo-1513635269975-59663e0ac1ad'),
-  field: u('photo-1523050895310-4a723a3e2b0b'),
+  field: u('photo-1500382017468-9049fed747ef'),
 };
 
 export const brand = {

@@ -92,8 +92,8 @@ export default function HomePage() {
           />
           <div aria-hidden className="absolute inset-0 hero-scrim" />
           <div className="c-container relative z-10 -mt-44 pb-6 pt-40 md:-mt-56 md:pb-8">
-            <div className="max-w-xl">
-              <h1 className="h1 text-heading" style={{ fontSize: 'clamp(2.6rem, 1.6rem + 4.4vw, 4.75rem)' }}>
+            <div className="max-w-4xl">
+              <h1 className="h1 text-heading md:whitespace-nowrap" style={{ fontSize: 'clamp(2.6rem, 1.6rem + 4.4vw, 4.5rem)' }}>
                 {brand.name}
               </h1>
               <p className="mt-5 max-w-[48ch] text-lg leading-relaxed text-navy-body">{brand.tagline}</p>

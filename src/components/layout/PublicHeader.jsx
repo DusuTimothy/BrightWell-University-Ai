@@ -82,15 +82,27 @@ export default function PublicHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [stack, setStack] = useState([]);
   const [q, setQ] = useState('');
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef(null);
+
+  const overlay = location.pathname === '/';
+  const solid = !overlay || scrolled;
 
   useEffect(() => {
     setSearchOpen(false);
     setMenuOpen(false);
     setStack([]);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!overlay) return;
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [overlay]);
 
   useEffect(() => {
     if (!menuOpen && !searchOpen) setStack([]);
@@ -120,7 +132,13 @@ export default function PublicHeader() {
   const current = stack.length > 0 ? MENU[stack[stack.length - 1]] : null;
 
   return (
-    <header className="dark sticky top-0 z-[210] bg-brand text-white" data-js-header>
+    <header
+      className={cn(
+        'z-210 text-white transition-colors duration-300',
+        solid ? 'dark sticky top-0 bg-transparent' : 'absolute inset-x-0 top-0 bg-transparent'
+      )}
+      data-js-header
+    >
       {/* overlay behind dropdowns */}
       <div
         aria-hidden
@@ -141,7 +159,12 @@ export default function PublicHeader() {
             <img src="/crest.svg" alt="" width="56" height="56" className="h-14 w-auto" />
           </Link>
 
-          <ul className="hidden items-center gap-5 rounded-[5px] border border-white/10 bg-brand px-5 py-2 text-sm lg:flex">
+          <ul
+            className={cn(
+              'hidden items-center gap-5 rounded-[5px] border px-5 py-2 text-sm lg:flex',
+              solid ? 'border-white/10 bg-brand' : 'border-white/25 bg-brand backdrop-blur-sm'
+            )}
+          >
             {UTILITY.map((u) => (
               <li key={u.label} className="group">
                 <Link to={u.to}>
@@ -151,7 +174,12 @@ export default function PublicHeader() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-5 rounded-[5px] border border-white/10 bg-brand px-5 py-2 text-sm">
+          <div
+            className={cn(
+              'flex items-center gap-5 rounded-[5px] border px-5 py-2 text-sm',
+              solid ? 'border-white/10 bg-brand' : 'border-white/25 bg-brand backdrop-blur-sm'
+            )}
+          >
             <button type="button" className="group flex items-center gap-2 font-medium" aria-expanded={searchOpen} aria-controls="bw-search" onClick={() => setSearchOpen(!searchOpen)}>
               <Underline className="group-hover:animated-underline--on">Search</Underline>
               <Icon name="search" className="c-icon--sm fill-cyan" />
