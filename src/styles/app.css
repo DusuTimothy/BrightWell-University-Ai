@@ -1,0 +1,316 @@
+/* ==========================================================================
+   Brightwell University — stylesheet (Tailwind v4)
+   Design modelled on ox.ac.uk (Numiko theme):
+   navy #002147, royal #1E3E8A, accent #1D42A6, cyan #26D2FF,
+   warm off-white page #F2F0F0, light blue band #E0EDF9, body #61615F.
+   Body: DM Sans · Headings: Source Serif 4 (Tiempos Headline stand-in).
+   ========================================================================== */
+@import 'tailwindcss';
+
+@theme {
+  /* Brand */
+  --color-brand: #002147;
+  --color-brand-deep: #00152e;
+  --color-brand-soft: #002b5e;
+
+  /* Semantic — light components */
+  --color-royal: #1e3e8a;
+  --color-accent: #1d42a6;
+  --color-accent-deep: #1e3e8a;
+  --color-band: #e0edf9;
+  --color-line: #b9d6f2;
+  --color-line-soft: #e4edf7;
+
+  /* Semantic — dark components */
+  --color-cyan: #26d2ff;
+  --color-cyan-deep: #0083ff;
+  --color-navy-ink: #ffffff;
+  --color-navy-body: #f1f7fd;
+  --color-navy-line: rgba(255, 255, 255, 0.1);
+
+  /* Text & surfaces */
+  --color-page: #f2f0f0;
+  --color-paper: #ffffff;
+  --color-heading: #1e3e8a;
+  --color-body: #61615f;
+
+  /* Badges */
+  --color-pill: #f2d25e;
+  --color-pill-ink: #15616d;
+  --color-tag-bg: #ffffff;
+  --color-tag-ink: #1e3e8a;
+
+  /* Warm neutrals (ox.ac.uk off-white ramp) */
+  --color-off-white-50: #f8f8f8;
+  --color-off-white-100: #f2f0f0;
+  --color-off-white-200: #e6e2e2;
+  --color-off-white-300: #d4cdcd;
+  --color-off-white-400: #baafaf;
+
+  /* Focus / util */
+  --color-alert: #eb4c0b;
+
+  /* Fonts */
+  --font-sans: 'DM Sans', Arial, system-ui, sans-serif;
+  --font-serif: 'Source Serif 4', 'Georgia', 'Times New Roman', serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    background: var(--color-page);
+    color: var(--color-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: #bfddfe;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Layout helpers
+   -------------------------------------------------------------------------- */
+.c-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+@media (min-width: 768px) {
+  .c-container { padding-inline: 2rem; }
+}
+@media (min-width: 1280px) {
+  .c-container { padding-inline: 2.5rem; }
+}
+
+.c-separator {
+  padding-block: 3.5rem;
+}
+@media (min-width: 768px) {
+  .c-separator { padding-block: 5rem; }
+}
+
+.text-heading {
+  color: var(--color-heading);
+}
+.dark .text-heading {
+  color: var(--color-navy-ink);
+}
+
+.font-heading {
+  font-family: var(--font-serif);
+}
+
+/* --------------------------------------------------------------------------
+   Animated underline (ox.ac.uk utility)
+   -------------------------------------------------------------------------- */
+.animated-underline {
+  --animated-underline-width: 0;
+  --animated-underline-height: 2px;
+  --animated-underline-color: var(--color-accent);
+  text-decoration-line: none;
+  background-image: linear-gradient(to right, var(--animated-underline-color), var(--animated-underline-color));
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: var(--animated-underline-width) var(--animated-underline-height);
+  transition-property: background-size, color;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dark .animated-underline,
+.dark .animated-underline {
+  --animated-underline-color: var(--color-cyan);
+}
+.animated-underline--on,
+.group:hover .group-hover\:animated-underline--on,
+.group\/teaser:hover .group-hover\/teaser\:animated-underline--on {
+  --animated-underline-width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — c-button / c-button--primary / c-button--secondary
+   -------------------------------------------------------------------------- */
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: 0 0 0 2px transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.c-button.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+.c-button.w-full { width: 100%; }
+@media (min-width: 1024px) {
+  .c-button.lg\:w-auto { width: auto; }
+}
+
+.c-button--primary {
+  background: var(--color-accent);
+  color: #ffffff;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+.c-button--primary:hover {
+  background: var(--color-accent-deep);
+  border-color: var(--color-accent-deep);
+  box-shadow: 0 0 0 2px var(--color-accent-deep);
+}
+.c-button--secondary {
+  background: transparent;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+.c-button--secondary:hover {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+/* Dark theme overrides */
+.dark .c-button--primary {
+  background: var(--color-cyan);
+  color: #002147;
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 0 2px var(--color-cyan);
+}
+.dark .c-button--primary:hover {
+  background: var(--color-cyan-deep);
+  border-color: var(--color-cyan-deep);
+  box-shadow: 0 0 0 2px var(--color-cyan-deep);
+}
+.dark .c-button--secondary {
+  background: transparent;
+  color: var(--color-cyan);
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 0 2px var(--color-cyan);
+}
+.dark .c-button--secondary:hover {
+  background: var(--color-cyan);
+  color: #002147;
+}
+
+/* --------------------------------------------------------------------------
+   Heading / body sizes
+   -------------------------------------------------------------------------- */
+.h1 { font-size: clamp(2rem, 1.3rem + 3vw, 3.25rem); }
+.h2 { font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem); }
+.h3 { font-size: clamp(1.4rem, 1.15rem + 1.2vw, 2rem); }
+.h4 { font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.5rem); }
+.h5 { font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.25rem); }
+.h6 { font-size: 1.0625rem; }
+
+/* --------------------------------------------------------------------------
+   Icon scale
+   -------------------------------------------------------------------------- */
+.c-icon { fill: currentColor; display: inline-block; vertical-align: middle; }
+.c-icon--xs { width: 0.95rem; height: 0.95rem; }
+.c-icon--sm { width: 1.1rem; height: 1.1rem; }
+.c-icon--md { width: 1.6rem; height: 1.6rem; }
+
+/* --------------------------------------------------------------------------
+   Hero (ox.ac.uk homepage): dark navy with muted video + scrim overlay
+   -------------------------------------------------------------------------- */
+.hero-grid-bg {
+  background-image:
+    radial-gradient(90% 120% at 78% 12%, rgba(38, 210, 255, 0.18), transparent 46%),
+    radial-gradient(70% 90% at 15% 92%, rgba(0, 131, 255, 0.16), transparent 55%),
+    linear-gradient(180deg, #002147 0%, #001e3f 100%);
+}
+.hero-scrim {
+  background:
+    linear-gradient(180deg, rgba(0, 33, 71, 0.4) 0%, rgba(0, 33, 71, 0.15) 35%, rgba(0, 33, 71, 0.92) 78%, #002147 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Logo watermark overlay (full-screen menu/search backdrops + page fixed)
+   -------------------------------------------------------------------------- */
+.watermark {
+  opacity: 0.11;
+  mix-blend-mode: plus-lighter;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Teaser card image soft radius */
+.tile-radius {
+  border-radius: 10px;
+}
+
+/* Tag pill (topic chips on news cards) */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  background: var(--color-tag-bg);
+  color: var(--color-tag-ink);
+}
+
+/* Date/reading-time pill */
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  background: var(--color-pill);
+  color: var(--color-pill-ink);
+}
+
+/* WYSIWYG-ish paragraph spacing inside cards/CTAs */
+.c-wysiwyg p + p {
+  margin-top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes bw-fade-block {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-fade-block { animation: bw-fade-block 0.22s ease; }
