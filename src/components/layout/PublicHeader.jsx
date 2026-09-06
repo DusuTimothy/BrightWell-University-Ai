@@ -189,6 +189,14 @@ export default function PublicHeader() {
               <Icon name="menu" className="c-icon--sm fill-cyan" />
             </button>
           </div>
+
+          <Link
+            to="/portal/login"
+            className="group flex items-center gap-2 font-medium"
+          >
+            <Underline className="group-hover:animated-underline--on">Sign in</Underline>
+            <Icon name="chevron-right" className="c-icon--sm fill-cyan" />
+          </Link>
         </div>
       </div>
 

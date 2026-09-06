@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Calendar, ChevronLeft, ChevronRight, Clock, Facebook, Instagram,
-  Linkedin, Mail, MapPin, Menu, Pause, Phone, Play, Quote, Rss, Search, Twitter, X, Youtube,
+  ArrowRight, Award, Banknote, Building2, Calendar, CalendarClock, CheckCircle2,
+  ChevronLeft, ChevronRight, Clock, Facebook, GraduationCap, IdCard, Instagram,
+  Linkedin, Mail, MapPin, Megaphone, Menu, Pause, Phone, Play, Quote, Rss,
+  Search, Twitter, Users, X, Youtube,
 } from 'lucide-react';
 import cn from '../../lib/cn.js';
 
@@ -18,6 +20,16 @@ const ICONS = {
   'chevron-left': ChevronLeft,
   play: Play,
   pause: Pause,
+  bank: Banknote,
+  users: Users,
+  badge: IdCard,
+  building: Building2,
+  'calendar-clock': CalendarClock,
+  award: Award,
+  naira: Banknote,
+  megaphone: Megaphone,
+  'check-circle': CheckCircle2,
+  'graduation-cap': GraduationCap,
   mail: Mail,
   phone: Phone,
   'map-pin': MapPin,

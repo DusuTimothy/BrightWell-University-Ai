@@ -1,0 +1,159 @@
+/* ==========================================================================
+   Brightwell University School — portal demo data
+   Deterministic pseudo-random generators keep the file small while giving
+   every student/subject term records (scores, fees, attendance) that are
+   stable across reloads.
+   ========================================================================== */
+
+export const school = {
+  name: 'Brightwell University School',
+  short: 'Brightwell School',
+  academicYear: '2025/2026',
+  term: 'First Term',
+  address: 'Brightwell Campus, 4 Academic Way, Lagos',
+};
+
+export const classes = [
+  { id: 'JSS1', name: 'Junior Secondary 1', classTeacher: 'Miss Adaku Eze', students: 32 },
+  { id: 'JSS2', name: 'Junior Secondary 2', classTeacher: 'Mr. Tunde Bakare', students: 30 },
+  { id: 'JSS3', name: 'Junior Secondary 3', classTeacher: 'Mrs. Funmilayo Sanni', students: 31 },
+  { id: 'SS1', name: 'Senior Secondary 1', classTeacher: 'Mrs. Ngozi Adeyemi', students: 34 },
+  { id: 'SS2', name: 'Senior Secondary 2', classTeacher: 'Dr. Emeka Nwosu', students: 33 },
+  { id: 'SS3', name: 'Senior Secondary 3', classTeacher: 'Mr. Ibrahim Suleiman', students: 29 },
+];
+
+export const staff = [
+  { id: 'T-201', name: 'Mrs. Ngozi Adeyemi', subject: 'Mathematics', classGroup: 'Senior Secondary', phone: '+234 803 100 0201', email: 'n.adeyemi@brightwell.ng' },
+  { id: 'T-202', name: 'Dr. Emeka Nwosu', subject: 'Physics', classGroup: 'Senior Secondary', phone: '+234 803 100 0202', email: 'e.nwosu@brightwell.ng' },
+  { id: 'T-203', name: 'Miss Adaku Eze', subject: 'English Language', classGroup: 'Junior Secondary', phone: '+234 803 100 0203', email: 'a.eze@brightwell.ng' },
+  { id: 'T-204', name: 'Mrs. Funmilayo Sanni', subject: 'Basic Science', classGroup: 'Junior Secondary', phone: '+234 803 100 0204', email: 'f.sanni@brightwell.ng' },
+  { id: 'T-205', name: 'Mr. Ibrahim Suleiman', subject: 'Further Mathematics', classGroup: 'Senior Secondary', phone: '+234 803 100 0205', email: 'i.suleiman@brightwell.ng' },
+  { id: 'T-206', name: 'Mrs. Halima Yusuf', subject: 'Biology', classGroup: 'Senior Secondary', phone: '+234 803 100 0206', email: 'h.yusuf@brightwell.ng' },
+  { id: 'T-207', name: 'Mr. Tunde Bakare', subject: 'Computer Studies', classGroup: 'Junior Secondary', phone: '+234 803 100 0207', email: 't.bakare@brightwell.ng' },
+  { id: 'T-208', name: 'Mrs. Grace Adeleke', subject: 'Economics', classGroup: 'Senior Secondary', phone: '+234 803 100 0208', email: 'g.adeleke@brightwell.ng' },
+];
+
+export const subjects = [
+  'Mathematics',
+  'English Language',
+  'Physics',
+  'Chemistry',
+  'Biology',
+  'Further Mathematics',
+  'Economics',
+  'Literature in English',
+  'Computer Studies',
+  'Basic Science',
+  'Civic Education',
+  'Agricultural Science',
+];
+
+export const students = [
+  { id: 'BWS-0001', admNo: 'BWS-2022-001', name: 'Adaeze Onyema', gender: 'F', class: 'SS2', guardian: 'Mr. C. Onyema', phone: '+234 802 111 0001' },
+  { id: 'BWS-0002', admNo: 'BWS-2023-008', name: 'Tunde Balogun', gender: 'M', class: 'SS1', guardian: 'Mrs. R. Balogun', phone: '+234 802 111 0002' },
+  { id: 'BWS-0003', admNo: 'BWS-2022-014', name: 'Aisha Mohammed', gender: 'F', class: 'JSS3', guardian: 'Mr. A. Mohammed', phone: '+234 802 111 0003' },
+  { id: 'BWS-0004', admNo: 'BWS-2024-021', name: 'Chidinma Okafor', gender: 'F', class: 'SS1', guardian: 'Mrs. J. Okafor', phone: '+234 802 111 0004' },
+  { id: 'BWS-0005', admNo: 'BWS-2023-011', name: 'Damilola Adekunle', gender: 'M', class: 'SS3', guardian: 'Dr. K. Adekunle', phone: '+234 802 111 0005' },
+  { id: 'BWS-0006', admNo: 'BWS-2021-003', name: 'Emeka Umeh', gender: 'M', class: 'SS3', guardian: 'Mr. P. Umeh', phone: '+234 802 111 0006' },
+  { id: 'BWS-0007', admNo: 'BWS-2024-030', name: 'Fatima Sani', gender: 'F', class: 'JSS1', guardian: 'Mrs. L. Sani', phone: '+234 802 111 0007' },
+  { id: 'BWS-0008', admNo: 'BWS-2022-019', name: 'Gbenga Lawal', gender: 'M', class: 'JSS2', guardian: 'Mr. O. Lawal', phone: '+234 802 111 0008' },
+  { id: 'BWS-0009', admNo: 'BWS-2023-017', name: 'Hauwa Ibrahim', gender: 'F', class: 'SS2', guardian: 'Mrs. Z. Ibrahim', phone: '+234 802 111 0009' },
+  { id: 'BWS-0010', admNo: 'BWS-2024-026', name: 'Ibrahim Musa', gender: 'M', class: 'SS1', guardian: 'Mr. S. Musa', phone: '+234 802 111 0010' },
+  { id: 'BWS-0011', admNo: 'BWS-2023-009', name: 'Joy Ekwueme', gender: 'F', class: 'JSS3', guardian: 'Mrs. N. Ekwueme', phone: '+234 802 111 0011' },
+  { id: 'BWS-0012', admNo: 'BWS-2022-006', name: 'Kelechi Obi', gender: 'M', class: 'SS2', guardian: 'Mr. V. Obi', phone: '+234 802 111 0012' },
+];
+
+const TERM_FEE = 385000; // ₦385,000 per term (boarding-equipped day school)
+export const sessionDates = { resumption: '2025-09-08', midTerm: '2025-10-20', exams: '2025-12-01', closing: '2025-12-19' };
+
+/* ---------- deterministic helpers ---------- */
+
+function hash(str) {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+export function scoreFor(studentId, subject) {
+  return 42 + (hash(studentId + '::' + subject + '::' + school.term) % 54);
+}
+
+export function gradeFor(score) {
+  if (score >= 75) return { letter: 'A', note: 'Excellent' };
+  if (score >= 65) return { letter: 'B', note: 'Very Good' };
+  if (score >= 55) return { letter: 'C', note: 'Good' };
+  if (score >= 45) return { letter: 'D', note: 'Credit' };
+  return { letter: 'F', note: 'Fail' };
+}
+
+export function studentResults(studentId, classId) {
+  const pool =
+    classId.startsWith('SS') || classId.includes('SS')
+      ? ['Mathematics', 'English Language', 'Physics', 'Chemistry', 'Biology', 'Further Mathematics', 'Economics', 'Literature in English']
+      : ['Mathematics', 'English Language', 'Basic Science', 'Computer Studies', 'Civic Education', 'Agricultural Science'];
+  return pool.map((subject) => {
+    const score = scoreFor(studentId, subject);
+    const g = gradeFor(score);
+    return { subject, score, ...g };
+  });
+}
+
+export function averageScore(studentId, classId) {
+  const r = studentResults(studentId, classId);
+  return Math.round(r.reduce((a, b) => a + b.score, 0) / r.length);
+}
+
+export function classPosition(studentId, classId) {
+  const roster = students.filter((s) => s.class === classId);
+  const mine = averageScore(studentId, classId);
+  return 1 + roster.filter((s) => averageScore(s.id, classId) > mine).length;
+}
+
+export function feesFor(studentId) {
+  const factor = hash(studentId + '::fees') % 100;
+  const paid = factor < 15 ? Math.round((TERM_FEE * 0.6) / 500) * 500 : factor < 40 ? Math.round((TERM_FEE * 0.85) / 500) * 500 : TERM_FEE;
+  return { term: `${school.academicYear} · ${school.term}`, fee: TERM_FEE, paid, balance: TERM_FEE - paid };
+}
+
+export function attendanceFor(classId) {
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  return days.map((day, i) => {
+    const present = hash(classId + '::' + day) % 7; // 0..6 absent-ish
+    const enrolled = classes.find((c) => c.id === classId)?.students ?? 30;
+    const absent = Math.min(4, present);
+    return { day, date: `Wk ${5 + i}`, enrolled, present: enrolled - absent, absent };
+  });
+}
+
+const BLOCKS = ['Period 1', 'Period 2', 'Period 3', 'Lunch & break', 'Period 4', 'Period 5'];
+export function timetableFor(classId) {
+  const roster =
+    classId.startsWith('SS3') ? subjects.filter((s) => ['Mathematics', 'English Language', 'Physics', 'Chemistry', 'Biology', 'Further Mathematics'].includes(s))
+    : classId.startsWith('SS') ? ['Mathematics', 'English Language', 'Physics', 'Chemistry', 'Biology', 'Further Mathematics', 'Economics', 'Literature in English']
+    : ['Mathematics', 'English Language', 'Basic Science', 'Computer Studies', 'Civic Education', 'Agricultural Science'];
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  return days.map((day, d) => ({
+    day,
+    blocks: BLOCKS.map((block, b) => {
+      if (block === 'Lunch & break') return { block, subject: '', teacher: '', break: true };
+      const idx = (hash(classId + '::' + day) + b * 3) % roster.length;
+      const subject = roster[idx];
+      const who = staff.find((t) => t.subject === subject);
+      return { block, subject, teacher: who ? who.name : '—' };
+    }),
+  }));
+}
+
+export const announcements = [
+  { id: 'A1', date: '2026-09-04', audience: 'All', title: 'Resumption of the 2025/2026 academic year', body: 'Lessons resume on Monday 8 September at 7:45am. Boarders should be back on campus by 6:00pm on Sunday 7 September. Please check your timetable in the portal.' },
+  { id: 'A2', date: '2026-09-01', audience: 'Parents', title: 'Tuition payment deadline', body: 'The deadline for full First Term tuition is Friday 19 September. Payment can be made via the portal or the school bursary. Please contact the bursar for a payment plan.' },
+  { id: 'A3', date: '2026-08-27', audience: 'Staff', title: 'Staff planning meeting', body: 'All teaching staff should attend the term planning meeting on Saturday 6 September, 10:00am in the Staff Common Room. The agenda has been shared via email.' },
+  { id: 'A4', date: '2026-08-22', audience: 'Students', title: 'Clubs and societies sign-up', body: 'Club sign-up for the new session opens this week in the students hall. Choir, debate, robotics, athletics and the young farmers club all need members.' },
+];
+
+export function todayDay() {
+  return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date().getDay()];
+}
