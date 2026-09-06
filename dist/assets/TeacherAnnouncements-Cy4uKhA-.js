@@ -1,1 +1,0 @@
-import{N as a,j as e,E as i,q as s}from"./index-DOrUugLf.js";import{A as o}from"./PortalBits-D2h0StR4.js";function r(){const t=a.filter(n=>n.audience==="All"||n.audience==="Staff");return e.jsxs("div",{className:"flex flex-col gap-6",children:[e.jsx(i,{title:"Announcements",subtitle:`Notices for staff · ${s.academicYear} ${s.term}`}),e.jsx(o,{items:t})]})}export{r as default};

@@ -254,7 +254,13 @@ export function CTA({ image, title, children, cta, flip = false, eyebrow }) {
             <div className="c-wysiwyg mt-4 leading-relaxed text-navy-body">{children}</div>
             {cta && (
               <div className="mt-6">
-                <Button to={cta.to}>{cta.label}</Button>
+                {cta.to ? (
+                  <Button to={cta.to}>{cta.label}</Button>
+                ) : cta.href ? (
+                  <Button href={cta.href} target={cta.href.startsWith('http') ? '_blank' : undefined} rel={cta.href.startsWith('http') ? 'noreferrer' : undefined}>
+                    {cta.label}
+                  </Button>
+                ) : null}
               </div>
             )}
           </div>
