@@ -192,7 +192,7 @@ export default function PublicHeader() {
 
           <Link
             to="/portal/login"
-            className="group flex items-center gap-2 font-medium"
+            className="group flex bg-brand px-2 py-2 text-sm rounded-md items-center gap-2 font-medium"
           >
             <Underline className="group-hover:animated-underline--on">Sign in</Underline>
             <Icon name="chevron-right" className="c-icon--sm fill-cyan" />

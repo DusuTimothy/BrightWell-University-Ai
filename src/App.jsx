@@ -17,6 +17,26 @@ const ContactPage = lazy(() => import('./pages/Public/ContactPage.jsx'));
 const SearchPage = lazy(() => import('./pages/Public/SearchPage.jsx'));
 const NotFoundPage = lazy(() => import('./pages/Public/NotFoundPage.jsx'));
 
+const StrategicPlanPage = lazy(() => import('./pages/Public/Info/StrategicPlanPage.jsx'));
+const LibrariesPage = lazy(() => import('./pages/Public/Info/LibrariesPage.jsx'));
+const MuseumsPage = lazy(() => import('./pages/Public/Info/MuseumsPage.jsx'));
+const GlossaryPage = lazy(() => import('./pages/Public/Info/GlossaryPage.jsx'));
+const EqualityPage = lazy(() => import('./pages/Public/Info/EqualityPage.jsx'));
+const PrivacyPage = lazy(() => import('./pages/Public/Info/PrivacyPage.jsx'));
+const CookiesPage = lazy(() => import('./pages/Public/Info/CookiesPage.jsx'));
+const SportPage = lazy(() => import('./pages/Public/Info/SportPage.jsx'));
+const VisitorsPage = lazy(() => import('./pages/Public/Info/VisitorsPage.jsx'));
+const MediaPage = lazy(() => import('./pages/Public/Info/MediaPage.jsx'));
+const AlumniPage = lazy(() => import('./pages/Public/Info/AlumniPage.jsx'));
+const AdvisersPage = lazy(() => import('./pages/Public/Info/AdvisersPage.jsx'));
+const PartnershipsPage = lazy(() => import('./pages/Public/Info/PartnershipsPage.jsx'));
+const JobsPage = lazy(() => import('./pages/Public/Info/JobsPage.jsx'));
+const TermDatesPage = lazy(() => import('./pages/Public/Info/TermDatesPage.jsx'));
+const MapPage = lazy(() => import('./pages/Public/Info/MapPage.jsx'));
+const AccessibilityPage = lazy(() => import('./pages/Public/Info/AccessibilityPage.jsx'));
+const LegalPage = lazy(() => import('./pages/Public/Info/LegalPage.jsx'));
+const SitemapPage = lazy(() => import('./pages/Public/Info/SitemapPage.jsx'));
+
 const PortalLoginPage = lazy(() => import('./pages/Portal/PortalLoginPage.jsx'));
 const AdminDashboard = lazy(() => import('./pages/Portal/Admin/AdminDashboard.jsx'));
 const AdminStudents = lazy(() => import('./pages/Portal/Admin/AdminStudents.jsx'));
@@ -91,6 +111,26 @@ export default function App() {
             <Route path="/events" element={<EventsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/search" element={<SearchPage />} />
+
+            <Route path="/strategic-plan" element={<StrategicPlanPage />} />
+            <Route path="/libraries" element={<LibrariesPage />} />
+            <Route path="/museums" element={<MuseumsPage />} />
+            <Route path="/glossary" element={<GlossaryPage />} />
+            <Route path="/equality" element={<EqualityPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/cookies" element={<CookiesPage />} />
+            <Route path="/sport" element={<SportPage />} />
+            <Route path="/visitors" element={<VisitorsPage />} />
+            <Route path="/media" element={<MediaPage />} />
+            <Route path="/alumni" element={<AlumniPage />} />
+            <Route path="/advisers" element={<AdvisersPage />} />
+            <Route path="/partnerships" element={<PartnershipsPage />} />
+            <Route path="/jobs" element={<JobsPage />} />
+            <Route path="/term-dates" element={<TermDatesPage />} />
+            <Route path="/map" element={<MapPage />} />
+            <Route path="/accessibility" element={<AccessibilityPage />} />
+            <Route path="/legal" element={<LegalPage />} />
+            <Route path="/sitemap" element={<SitemapPage />} />
           </Route>
 
           <Route path="/portal" element={<Navigate to="/portal/login" replace />} />

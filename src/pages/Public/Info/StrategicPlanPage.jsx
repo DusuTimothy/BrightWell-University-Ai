@@ -1,0 +1,66 @@
+import React from 'react';
+import InfoPage from '../../../components/ui/InfoPage.jsx';
+import { brand } from '../../../data/seed.js';
+
+export default function StrategicPlanPage() {
+  return (
+    <InfoPage
+      title="Strategic Plan 2025–2035"
+      lead="Brightwell intends to shape the next decade with a plan built on research excellence, inspirational education, openness and an enduring commitment to the society we serve."
+      crumbs={[{ to: '/', label: 'Home' }, { to: '/about', label: 'About' }, { label: 'Strategic plan' }]}
+      sections={[
+        {
+          heading: 'Our vision and mission',
+          body: [
+            `Brightwell was founded in ${brand.founded} with a simple idea: that knowledge pursued without fear or favour benefits everyone. The Strategic Plan sets out how we will honour that idea through 2035.`,
+            'The University will remain a place where the best scholars and the brightest students come together — across arts, humanities, sciences and medicine — and where the discoveries they make are shared beyond the lecture theatre.',
+          ],
+          aside: {
+            title: 'The plan at a glance',
+            rows: [
+              ['Lifetime', '2025 – 2035'],
+              ['Core pillars', '4'],
+              ['Institutional goals', '12'],
+              ['Committed investment', 'N5.2bn'],
+              ['Progress reviews', 'Annual'],
+            ],
+          },
+        },
+        {
+          heading: 'Four pillars',
+          body: [
+            'The plan is organised around four pillars that together describe every part of the University’s work.',
+          ],
+          list: {
+            title: 'What they cover',
+            items: [
+              'Radical research — curiosity-driven discovery and challenge-led science, from gravitation to public health.',
+              'Outstanding education — world-class teaching, a distinctive tutorial tradition and widening participation.',
+              'Global impact — universities as public institutions, serving local communities and global partners.',
+              'One Brightwell — a single collegiate community where staff and students thrive equally.',
+            ],
+          },
+        },
+        {
+          heading: 'How we will measure success',
+          intro:
+            'Each pillar carries measurable goals, reported publicly each year in the University’s Annual Review.',
+          body: [
+            'We will track the international quality of our research, the outcomes of our students, our environmental performance and the strength of our partnerships — and we will be transparent when targets are missed.',
+            'The strategy is owned by the governing council and delivered by the vice-chancellor and pro-vice-chancellors, with regular consultation across colleges, faculties and departments.',
+          ],
+          aside: {
+            title: 'Related documents',
+            body: 'Every goal is connected to a named owner and a published mapping in the delivery plan.',
+            links: [
+              ['/about', 'About the University'],
+              ['/libraries', 'Libraries and collections'],
+              ['/equality', 'Equality policy'],
+              ['/jobs', 'Work with us'],
+            ],
+          },
+        },
+      ]}
+    />
+  );
+}

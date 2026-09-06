@@ -1,0 +1,1 @@
+import{N as a,j as e,E as i,q as s}from"./index-Q5tmBBoz.js";import{A as o}from"./PortalBits-DkIuOqhv.js";function u(){const t=a.filter(n=>n.audience==="All"||n.audience==="Students");return e.jsxs("div",{className:"flex flex-col gap-6",children:[e.jsx(i,{title:"Announcements",subtitle:`News for students · ${s.academicYear} ${s.term}`}),e.jsx(o,{items:t})]})}export{u as default};

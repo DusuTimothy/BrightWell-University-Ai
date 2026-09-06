@@ -118,11 +118,17 @@ export default function PublicFooter() {
         <div className="c-container flex flex-col items-start justify-between gap-3 text-xs text-white/80 md:flex-row md:items-center">
           <p>© 2026 {brand.name}</p>
           <ul className="flex flex-wrap gap-x-5 gap-y-2">
-            {['Accessibility', 'Privacy', 'Legal', 'Cookies', 'Sitemap'].map((l) => (
-              <li key={l}>
-                <a href="/about" className="hover:text-white">
-                  {l}
-                </a>
+            {[
+              ['/accessibility', 'Accessibility'],
+              ['/privacy', 'Privacy'],
+              ['/legal', 'Legal'],
+              ['/cookies', 'Cookies'],
+              ['/sitemap', 'Sitemap'],
+            ].map(([to, label]) => (
+              <li key={label}>
+                <Link to={to} className="hover:text-white">
+                  {label}
+                </Link>
               </li>
             ))}
           </ul>
