@@ -61,6 +61,17 @@ const TeacherGradebook = lazy(() => import('./pages/Portal/Teacher/TeacherGradeb
 const TeacherTimetable = lazy(() => import('./pages/Portal/Teacher/TeacherTimetable.jsx'));
 const TeacherAnnouncements = lazy(() => import('./pages/Portal/Teacher/TeacherAnnouncements.jsx'));
 
+const LearnHomePage = lazy(() => import('./pages/Public/LearnHomePage.jsx'));
+const LearnCoursePage = lazy(() => import('./pages/Public/LearnCoursePage.jsx'));
+const StudentLearning = lazy(() => import('./pages/Portal/Student/StudentLearning.jsx'));
+const StudentLearningCourse = lazy(() => import('./pages/Portal/Student/StudentLearningCourse.jsx'));
+const StudentLessonPlayer = lazy(() => import('./pages/Portal/Student/StudentLessonPlayer.jsx'));
+const StudentQuiz = lazy(() => import('./pages/Portal/Student/StudentQuiz.jsx'));
+const StudentAssignments = lazy(() => import('./pages/Portal/Student/StudentAssignments.jsx'));
+const TeacherLearning = lazy(() => import('./pages/Portal/Teacher/TeacherLearning.jsx'));
+const TeacherCourseManage = lazy(() => import('./pages/Portal/Teacher/TeacherCourseManage.jsx'));
+const AdminLearning = lazy(() => import('./pages/Portal/Admin/AdminLearning.jsx'));
+
 function Loader() {
   return (
     <div className="flex min-h-[40vh] items-center justify-center">
@@ -106,6 +117,8 @@ export default function App() {
             <Route path="/admissions" element={<AdmissionsPage />} />
             <Route path="/courses" element={<CoursesPage />} />
             <Route path="/courses/:code" element={<CourseDetailPage />} />
+            <Route path="/learn" element={<LearnHomePage />} />
+            <Route path="/learn/:slug" element={<LearnCoursePage />} />
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/news/:slug" element={<NewsArticlePage />} />
@@ -149,6 +162,7 @@ export default function App() {
             <Route path="grades" element={<AdminGrades />} />
             <Route path="fees" element={<AdminFees />} />
             <Route path="announcements" element={<AdminAnnouncements />} />
+            <Route path="learn" element={<AdminLearning />} />
           </Route>
 
           <Route path="/portal/student" element={<PortalShell role="student" />}>
@@ -157,6 +171,11 @@ export default function App() {
             <Route path="timetable" element={<StudentTimetable />} />
             <Route path="fees" element={<StudentFees />} />
             <Route path="announcements" element={<StudentAnnouncements />} />
+            <Route path="learn" element={<StudentLearning />} />
+            <Route path="learn/:slug" element={<StudentLearningCourse />} />
+            <Route path="learn/:slug/quiz" element={<StudentQuiz />} />
+            <Route path="learn/:slug/assignments" element={<StudentAssignments />} />
+            <Route path="learn/:slug/:lessonId" element={<StudentLessonPlayer />} />
           </Route>
 
           <Route path="/portal/teacher" element={<PortalShell role="teacher" />}>
@@ -165,6 +184,8 @@ export default function App() {
             <Route path="gradebook" element={<TeacherGradebook />} />
             <Route path="timetable" element={<TeacherTimetable />} />
             <Route path="announcements" element={<TeacherAnnouncements />} />
+            <Route path="learn" element={<TeacherLearning />} />
+            <Route path="learn/:slug/manage" element={<TeacherCourseManage />} />
           </Route>
 
           <Route path="*" element={<NotFoundPage />} />

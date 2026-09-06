@@ -16,6 +16,7 @@ const NAV = {
     { to: '/portal/admin/grades', label: 'Grades', icon: 'award' },
     { to: '/portal/admin/fees', label: 'Fees & payments', icon: 'naira' },
     { to: '/portal/admin/announcements', label: 'Announcements', icon: 'megaphone' },
+    { to: '/portal/admin/learn', label: 'E-learning', icon: 'book-open' },
   ],
   teacher: [
     { to: '/portal/teacher', label: 'Dashboard', icon: 'bank', end: true },
@@ -23,6 +24,7 @@ const NAV = {
     { to: '/portal/teacher/gradebook', label: 'Gradebook', icon: 'award' },
     { to: '/portal/teacher/timetable', label: 'Timetable', icon: 'calendar-clock' },
     { to: '/portal/teacher/announcements', label: 'Announcements', icon: 'megaphone' },
+    { to: '/portal/teacher/learn', label: 'E-learning', icon: 'book-open' },
   ],
   student: [
     { to: '/portal/student', label: 'Dashboard', icon: 'bank', end: true },
@@ -30,6 +32,7 @@ const NAV = {
     { to: '/portal/student/timetable', label: 'My timetable', icon: 'calendar-clock' },
     { to: '/portal/student/fees', label: 'Fees & payments', icon: 'naira' },
     { to: '/portal/student/announcements', label: 'Announcements', icon: 'megaphone' },
+    { to: '/portal/student/learn', label: 'E-learning', icon: 'book-open' },
   ],
 };
 

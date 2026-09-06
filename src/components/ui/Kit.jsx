@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, Award, Banknote, Building2, Calendar, CalendarClock, CheckCircle2,
-  ChevronLeft, ChevronRight, Clock, Facebook, GraduationCap, IdCard, Instagram,
-  Linkedin, Mail, MapPin, Megaphone, Menu, Pause, Phone, Play, Quote, Rss,
-  Search, Twitter, Users, X, Youtube,
+  ArrowRight, Award, Banknote, BookOpen, Building2, Calendar, CalendarClock, Check,
+  CheckCircle2, ChevronLeft, ChevronRight, ClipboardList, Clock, Facebook, FileCheck,
+  FileText, GraduationCap, IdCard, Instagram, Linkedin, Mail, MapPin, Megaphone, Menu,
+  Pause, Phone, Play, Quote, Rss, Search, Target, Twitter, Users, X, Youtube,
 } from 'lucide-react';
 import cn from '../../lib/cn.js';
 
@@ -30,6 +30,12 @@ const ICONS = {
   megaphone: Megaphone,
   'check-circle': CheckCircle2,
   'graduation-cap': GraduationCap,
+  'book-open': BookOpen,
+  clipboard: ClipboardList,
+  check: Check,
+  'file-check': FileCheck,
+  'file-text': FileText,
+  target: Target,
   mail: Mail,
   phone: Phone,
   'map-pin': MapPin,

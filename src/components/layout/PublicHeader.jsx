@@ -48,6 +48,15 @@ const MENU = [
     ],
   },
   {
+    label: 'E-learning',
+    href: '/learn',
+    children: [
+      ['/learn', 'Browse all courses'],
+      ['/learn', 'Junior Secondary courses'],
+      ['/learn', 'Senior Secondary courses'],
+    ],
+  },
+  {
     label: 'Research',
     href: '/research',
     children: [
