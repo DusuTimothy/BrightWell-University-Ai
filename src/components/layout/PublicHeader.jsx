@@ -211,8 +211,8 @@ export default function PublicHeader() {
         aria-hidden={!searchOpen}
       >
         <div className="relative overflow-hidden">
-          <div aria-hidden className="absolute left-0 top-[-15%] -translate-y-[5%]">
-            <img src="/crest.svg" alt="" className="watermark w-[46rem] max-w-none" />
+          <div aria-hidden className="absolute left-0 top-[-15%] -translate-y-5%">
+            <img src="/crest.svg" alt="" className="watermark w-184 max-w-none" />
           </div>
           <div className="c-container relative py-12 md:py-16">
             <div className="mx-auto max-w-2xl text-center">
@@ -254,12 +254,12 @@ export default function PublicHeader() {
         aria-hidden={!menuOpen}
       >
         <div className="relative">
-          <div aria-hidden className="absolute left-0 top-[-15%] -translate-y-[5%]">
-            <img src="/crest.svg" alt="" className="watermark w-[46rem] max-w-none" />
+          <div aria-hidden className="absolute left-0 top-[-15%] -translate-y-5%">
+            <img src="/crest.svg" alt="" className="watermark w-184 max-w-none" />
           </div>
           <div ref={menuRef} className="c-container relative grid gap-10 py-8 md:py-12 lg:grid-cols-12">
             {/* drilldown panes */}
-            <div className="relative min-h-[22rem] lg:col-span-7">
+            <div className="relative min-h-88 lg:col-span-7">
               <div className={cn('transition-opacity', stack.length === 0 ? 'opacity-100' : 'pointer-events-none opacity-0')}>
                 <ul>
                   {MENU.map((item, i) => (
@@ -312,7 +312,7 @@ export default function PublicHeader() {
             <div className="hidden lg:col-span-5 lg:block">
               <div className="dark overflow-hidden rounded-md bg-brand ring-1 ring-white/10">
                 <div className="overflow-hidden">
-                  <img src={IMG.graduation} alt="" className="aspect-[16/9] h-44 w-full object-cover" />
+                  <img src={IMG.graduation} alt="" className="aspect-video h-44 w-full object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="h4 text-heading">Support Brightwell</h3>

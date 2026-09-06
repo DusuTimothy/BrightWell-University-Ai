@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader.jsx';
 import { Button, Icon, Section } from '../../components/ui/Kit.jsx';
@@ -31,6 +31,34 @@ export default function CourseDetailPage() {
   const related = pool.filter((c) => c.area === course.area && c.code !== course.code).slice(0, 3);
   const backLabel = isGrad ? 'Graduate courses' : 'Undergraduate courses';
   const backHref = isGrad ? '/courses?level=graduate' : '/courses?level=undergraduate';
+
+  const [applyOpen, setApplyOpen] = useState(false);
+  const [applied, setApplied] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', phone: '', country: '', personalStatement: '' });
+
+  useEffect(() => {
+    if (!applyOpen) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setApplyOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [applyOpen]);
+
+  function openApply() {
+    setApplied(false);
+    setForm({ name: '', email: '', phone: '', country: '', personalStatement: '' });
+    setApplyOpen(true);
+  }
+
+  function submitApplication(e) {
+    e.preventDefault();
+    setApplied(true);
+  }
 
   return (
     <>
@@ -134,7 +162,7 @@ export default function CourseDetailPage() {
                     ))}
                   </dl>
                   <div className="p-6">
-                    <Button to="/admissions">Apply now</Button>
+                    <Button onClick={openApply}>Apply now</Button>
                   </div>
                 </div>
 
@@ -192,6 +220,106 @@ export default function CourseDetailPage() {
           </div>
         </div>
       </Section>
+
+      {applyOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Apply to ${course.title}`}
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 p-4"
+          onClick={() => setApplyOpen(false)}
+        >
+          <div
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl md:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {applied ? (
+              <div className="text-center">
+                <Icon name="check-circle" className="c-icon--lg mx-auto fill-accent" />
+                <h3 className="h3 mt-4 text-heading">Application submitted</h3>
+                <p className="mt-2 text-sm leading-relaxed text-body">
+                  Thank you, {form.name || 'candidate'}. Your application for {course.title} ({course.code}) has been
+                  recorded. In a real deployment this would be sent to our admissions team.
+                </p>
+                <div className="mt-6">
+                  <Button onClick={() => setApplyOpen(false)}>Close</Button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="h3 text-heading">Apply to {course.title}</h3>
+                    <p className="mt-1 text-sm text-body">
+                      {course.code} · {course.degree} · {course.years} years · {course.faculty}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setApplyOpen(false)}
+                    aria-label="Close application form"
+                    className="rounded-md p-2 text-body hover:bg-band hover:text-heading"
+                  >
+                    <Icon name="cross" className="c-icon--sm" />
+                  </button>
+                </div>
+
+                <form onSubmit={submitApplication} className="mt-6 grid grid-cols-2 gap-4">
+                  <label className="col-span-2 block text-sm md:col-span-1">
+                    <span className="mb-1 block font-medium text-heading">Full name</span>
+                    <input
+                      required
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      className="w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm outline-none focus:border-accent"
+                    />
+                  </label>
+                  <label className="col-span-2 block text-sm md:col-span-1">
+                    <span className="mb-1 block font-medium text-heading">Email address</span>
+                    <input
+                      required
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className="w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm outline-none focus:border-accent"
+                    />
+                  </label>
+                  <label className="col-span-2 block text-sm md:col-span-1">
+                    <span className="mb-1 block font-medium text-heading">Phone number</span>
+                    <input
+                      type="tel"
+                      value={form.phone}
+                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                      className="w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm outline-none focus:border-accent"
+                    />
+                  </label>
+                  <label className="col-span-2 block text-sm md:col-span-1">
+                    <span className="mb-1 block font-medium text-heading">Country of residence</span>
+                    <input
+                      value={form.country}
+                      onChange={(e) => setForm({ ...form, country: e.target.value })}
+                      className="w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm outline-none focus:border-accent"
+                    />
+                  </label>
+                  <label className="col-span-2 block text-sm">
+                    <span className="mb-1 block font-medium text-heading">Personal statement</span>
+                    <textarea
+                      rows={5}
+                      value={form.personalStatement}
+                      onChange={(e) => setForm({ ...form, personalStatement: e.target.value })}
+                      placeholder="Tell us why you are interested in this course."
+                      className="w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm outline-none focus:border-accent"
+                    />
+                  </label>
+                  <div className="col-span-2">
+                    <Button icon="arrow">Submit application</Button>
+                  </div>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }
