@@ -34,7 +34,7 @@ const IMG = {
   data: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
   medicine: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
   business: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80',
-  philosophy: 'https://images.unsplash.com/photo-1521714161819-155a68d72b5f?auto=format&fit=crop&w=1200&q=80',
+  philosophy: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
 };
 
 const secondaryCourses = [

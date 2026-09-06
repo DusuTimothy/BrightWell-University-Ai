@@ -1,14 +1,21 @@
-import React, { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader.jsx';
 import { Section, Icon } from '../../components/ui/Kit.jsx';
 import { learningCourses, courseDuration, BRANCHES, levelLabel } from '../../data/learning.js';
 import cn from '../../lib/cn.js';
 
 export default function LearnHomePage() {
-  const [branch, setBranch] = useState('secondary');
+  const [searchParams] = useSearchParams();
+  const branchParam = searchParams.get('branch');
+  const initialBranch = BRANCHES.some((b) => b.id === branchParam) ? branchParam : 'secondary';
+  const [branch, setBranch] = useState(initialBranch);
   const [level, setLevel] = useState('All');
   const [q, setQ] = useState('');
+
+  useEffect(() => {
+    if (BRANCHES.some((b) => b.id === branchParam)) setBranch(branchParam);
+  }, [branchParam]);
 
   const active = BRANCHES.find((b) => b.id === branch);
 

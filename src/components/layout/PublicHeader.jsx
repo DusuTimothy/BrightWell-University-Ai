@@ -52,6 +52,7 @@ const MENU = [
     href: '/learn',
     children: [
       ['/learn', 'Browse all courses'],
+      ['/learn?branch=university', 'University courses'],
       ['/learn', 'Junior Secondary courses'],
       ['/learn', 'Senior Secondary courses'],
     ],
@@ -103,7 +104,7 @@ export default function PublicHeader() {
     setSearchOpen(false);
     setMenuOpen(false);
     setStack([]);
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   useEffect(() => {
     if (!overlay) return;
