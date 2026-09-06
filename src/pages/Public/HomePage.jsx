@@ -82,14 +82,17 @@ export default function HomePage() {
         <div className="relative">
           <video
             className="h-[62vh] w-full object-cover md:h-[74vh]"
-            src={VIDEO.ambient}
             muted
             loop
             autoPlay
             playsInline
             poster={IMG.hero}
             aria-hidden
-          />
+          >
+            <source src="/video/campus.webm" type="video/webm" />
+            <source src={VIDEO.ambient} type="video/quicktime" />
+            <source src={VIDEO.hd} type="video/webm" />
+          </video>
           <div aria-hidden className="absolute inset-0 hero-scrim" />
           <div className="c-container relative z-10 -mt-44 pb-6 pt-40 md:-mt-56 md:pb-8">
             <div className="max-w-4xl">

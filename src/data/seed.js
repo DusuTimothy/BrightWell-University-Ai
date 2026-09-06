@@ -8,7 +8,12 @@ const u = (id, w = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 
 export const VIDEO = {
-  ambient: 'https://cdn.pixabay.com/video/2019/02/16/21472-318172509_large.mp4',
+  /* Local, bundled copy — plays instantly, works offline, all browsers.
+     Campus footage (University of Oulu, Linnanmaa) via Wikimedia Commons
+     (CC BY-SA), transcoded to H.264 MP4 by Commons. */
+  ambient: '/video/campus.mp4',
+  /* Optional HD upgrade for capable browsers/networks (WebM/VP9). */
+  hd: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/1/1a/Linnanmaa_University_of_Oulu_20260118.webm/Linnanmaa_University_of_Oulu_20260118.webm.1080p.vp9.webm',
 };
 
 export const IMG = {
