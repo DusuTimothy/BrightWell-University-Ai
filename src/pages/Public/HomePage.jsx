@@ -146,7 +146,7 @@ export default function HomePage() {
                     placeholder="Search for a course, e.g. medicine, physics, law…"
                     className="w-full flex-1 rounded-md border border-cyan/40 bg-white px-4 py-3 text-sm text-royal outline-none placeholder:text-body/60 focus:border-cyan"
                   />
-                  <Button>Search courses</Button>
+                  <Button type="submit">Search courses</Button>
                 </div>
               </div>
             </div>

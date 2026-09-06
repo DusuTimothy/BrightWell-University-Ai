@@ -16,7 +16,9 @@ function CourseRow({ c }) {
               {c.code}
             </span>
             <h3 className="h5 text-heading">
-              <span className="animated-underline animated-underline--off group-hover:animated-underline--on">{c.title}</span>
+              <a href={`/courses/${c.code}`} className="animated-underline animated-underline--off group-hover:animated-underline--on">
+                {c.title}
+              </a>
             </h3>
           </div>
           <p className="mt-1 max-w-[70ch] text-sm leading-relaxed">{c.blurb}</p>
@@ -25,7 +27,7 @@ function CourseRow({ c }) {
           <span className="whitespace-nowrap">{c.degree}</span>
           <span className="whitespace-nowrap">{c.years} years</span>
           <span className="flex items-center gap-1 font-medium text-accent">
-            <a href="/admissions" className="animated-underline animated-underline--off hover:animated-underline--on block">
+            <a href={`/courses/${c.code}`} className="animated-underline animated-underline--off hover:animated-underline--on block">
               Find out more
             </a>
             <Icon name="chevron-right" className="c-icon--sm" />

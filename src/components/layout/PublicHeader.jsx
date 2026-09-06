@@ -69,7 +69,7 @@ const MENU = [
     ],
   },
   { label: 'Events', href: '/events', children: [['/events', 'What’s on'], ['/events', 'Open days']] },
-  { label: 'Students', href: '/student-life', children: [['/student-life', 'Student life'], ['/student-life', 'Accommodation'], ['/student-life', 'Clubs and societies']] },
+  { label: 'Students', href: '/student-life', children: [['/student-life', 'Student life'], ['/student-life', 'Accommodation'], ['/student-life', 'Clubs and societies'], ['/resources', 'Study resources']] },
   { label: 'Staff', href: '/about#staff', children: [['/about#staff', 'For staff'], ['/about', 'Jobs'], ['/student-life', 'Wellbeing support']] },
 ];
 

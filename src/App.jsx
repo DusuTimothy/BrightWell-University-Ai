@@ -7,6 +7,8 @@ import PortalShell from './components/portal/PortalShell.jsx';
 const HomePage = lazy(() => import('./pages/Public/HomePage.jsx'));
 const AdmissionsPage = lazy(() => import('./pages/Public/AdmissionsPage.jsx'));
 const CoursesPage = lazy(() => import('./pages/Public/CoursesPage.jsx'));
+const CourseDetailPage = lazy(() => import('./pages/Public/CourseDetailPage.jsx'));
+const ResourcesPage = lazy(() => import('./pages/Public/ResourcesPage.jsx'));
 const NewsPage = lazy(() => import('./pages/Public/NewsPage.jsx'));
 const NewsArticlePage = lazy(() => import('./pages/Public/NewsArticlePage.jsx'));
 const ResearchPage = lazy(() => import('./pages/Public/ResearchPage.jsx'));
@@ -103,6 +105,8 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/admissions" element={<AdmissionsPage />} />
             <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/courses/:code" element={<CourseDetailPage />} />
+            <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/news" element={<NewsPage />} />
             <Route path="/news/:slug" element={<NewsArticlePage />} />
             <Route path="/research" element={<ResearchPage />} />
