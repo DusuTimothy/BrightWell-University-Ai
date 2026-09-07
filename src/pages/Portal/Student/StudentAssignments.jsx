@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
-import { PageHeading, Card, Badge } from '../../../components/portal/PortalKit.jsx';
+import { Card, Badge } from '../../../components/portal/PortalKit.jsx';
 import { Icon } from '../../../components/ui/Kit.jsx';
 import { getLearningCourse, getSubmission, saveSubmission, getGrade } from '../../../data/learning.js';
 import { getPortalUser } from '../../../lib/portalAuth.js';
@@ -14,7 +14,7 @@ export default function StudentAssignments() {
   const [drafts, setDrafts] = useState({});
   const [saved, setSaved] = useState({});
 
-  if (!course) return <Navigate to="/portal/learn" replace />;
+  if (!course) return <Navigate to="/portal/student/learn" replace />;
 
   function submit(a, e) {
     e.preventDefault();
@@ -27,14 +27,19 @@ export default function StudentAssignments() {
 
   return (
     <div className="flex flex-col gap-6">
-      <Link to={`/portal/learn/${course.slug}`} className="flex items-center gap-2 text-sm font-medium text-accent hover:underline">
+      <Link to={`/portal/student/learn/${course.slug}`} className="flex items-center gap-2 text-sm font-medium text-accent hover:underline">
         <Icon name="chevron-left" className="c-icon--sm" />
         {course.title}
       </Link>
-      <PageHeading
-        title="Assignments"
-        subtitle={`${course.assignments.length} open · graded by ${course.teacher}`}
-      />
+
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="h2 text-heading">Assignments</h1>
+          <p className="mt-1 text-sm text-body">
+            {course.assignments.length} open pieces of work · graded by {course.teacher}
+          </p>
+        </div>
+      </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         {course.assignments.map((a) => {
@@ -48,8 +53,8 @@ export default function StudentAssignments() {
                 {submission && <Badge tone="success">Submitted</Badge>}
                 {grade != null && <Badge tone="accent">Grade: {grade}/{a.points}</Badge>}
               </div>
-              <h3 className="h5 mt-2 text-heading">{a.title}</h3>
-              <p className="mt-1 flex-1 text-sm leading-relaxed text-body">{a.prompt}</p>
+              <h3 className="h5 mt-3 text-heading">{a.title}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{a.prompt}</p>
 
               {grade != null ? (
                 <div className="mt-4 rounded-lg bg-band/60 p-3 text-sm text-ink">
@@ -57,7 +62,7 @@ export default function StudentAssignments() {
                     <Icon name="file-check" className="c-icon--sm fill-accent" />
                     Marked: {grade}/{a.points} pts
                   </p>
-                  <p className="mt-1 text-body">Great work — your course leader has recorded this grade on your record.</p>
+                  <p className="mt-1 text-body">Your instructor has recorded this grade on your record.</p>
                 </div>
               ) : submission ? (
                 <div className="mt-4 rounded-lg bg-emerald-50 p-3 text-sm text-emerald-800 ring-1 ring-emerald-200">
@@ -71,8 +76,9 @@ export default function StudentAssignments() {
                 </div>
               ) : (
                 <form onSubmit={(e) => submit(a, e)} className="mt-4 flex flex-col gap-2">
+                  <label className="text-xs font-semibold text-body/80">Your response</label>
                   <textarea
-                    rows={3}
+                    rows={4}
                     required
                     value={drafts[a.id] || ''}
                     onChange={(e) => setDrafts((d) => ({ ...d, [a.id]: e.target.value }))}

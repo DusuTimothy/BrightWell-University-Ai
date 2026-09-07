@@ -1,26 +1,50 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader.jsx';
-import { Button, CTA, Icon, Section, SectionHeader } from '../../components/ui/Kit.jsx';
-import { IMG, brand, colleges, stats } from '../../data/seed.js';
+import { Icon, Section, SectionHeader } from '../../components/ui/Kit.jsx';
+import { IMG, brand, stats } from '../../data/seed.js';
 
-const SECTIONS = [
+const PILLARS = [
   {
-    id: 'giving',
-    title: 'Brightwell Excellence',
-    body: 'Together, let’s turn today’s biggest challenges into tomorrow’s boldest breakthroughs. Gifts of every size power scholarships, research and our access programme.',
-    cta: 'Make a gift',
+    icon: 'play',
+    title: 'Video-first lessons',
+    copy: 'Each lesson is a short video paired with structured notes. Pause, rewind and review at the speed that fits you.',
   },
   {
-    id: 'staff',
-    title: 'For staff',
-    body: 'People are the foundation of this University’s success. Explore careers, staff benefits, development programmes and the staff intranet.',
-    cta: 'Explore careers',
+    icon: 'target',
+    title: 'Progress you can see',
+    copy: 'Every lesson, quiz and assignment updates your personal progress bar and learner record.',
   },
   {
-    id: 'history',
-    title: 'Our history',
-    body: `Founded in ${brand.founded}, Brightwell began as a single hall of residence. Today it is a collegiate community of twenty-four thousand students and more than a hundred researchers drawn from across the world.`,
-    cta: 'Read our history',
+    icon: 'award',
+    title: 'Quizzes & assignments',
+    copy: 'Finish the lessons, take the end-of-course quiz, and submit short assignments for instructor feedback.',
+  },
+  {
+    icon: 'users',
+    title: 'Instructor-led',
+    copy: 'Courses are taught by subject-matter instructors. Their names, photos and qualifications are on every course page.',
+  },
+];
+
+const ROLES = [
+  {
+    title: 'Learners',
+    copy: 'Pick a course, watch the lessons, take the quiz and submit assignments. Your progress is saved automatically.',
+    cta: 'Browse courses',
+    to: '/courses',
+  },
+  {
+    title: 'Instructors',
+    copy: 'Manage your own courses — review learner grades, respond to submissions and keep the catalogue up to date.',
+    cta: 'Sign in as instructor',
+    to: '/portal/login',
+  },
+  {
+    title: 'Administrators',
+    copy: 'See the platform at a glance — courses live, learners enrolled, quiz pass rates and platform health.',
+    cta: 'Sign in as administrator',
+    to: '/portal/login',
   },
 ];
 
@@ -28,107 +52,84 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        title="About Brightwell"
-        lead="Brightwell University is one of the continent’s leading academic institutions — a collegiate community of scholars, students and staff pursuing knowledge that benefits society."
+        title="How Brightwell works"
+        lead="Brightwell Academy is an e-learning platform built around short video lessons, structured notes, quizzes and assignments. Here's what to expect when you sign in."
         crumbs={[{ to: '/', label: 'Home' }, { label: 'About' }]}
       />
 
-      {/* Stats band */}
-      <Section band>
+      <Section>
         <div className="c-container">
+          <SectionHeader title="The platform in numbers" />
           <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
             {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="h3 text-brand">{s.value}</p>
-                <p className="mt-1 text-sm leading-snug text-body">{s.label}</p>
+              <div key={s.label} className="rounded-xl bg-band/40 p-5 text-center ring-1 ring-line">
+                <p className="font-heading text-2xl text-heading">{s.value}</p>
+                <p className="mt-1 text-xs text-body/80">{s.label}</p>
               </div>
             ))}
           </div>
         </div>
       </Section>
 
-      <Section>
-        <div className="c-container grid grid-cols-12 gap-8">
-          <div className="col-span-full lg:col-span-7">
-            <h2 className="h2 mb-4 text-heading">A collegiate University</h2>
-            <div className="space-y-4 text-base leading-relaxed">
-              <p>
-                Brightwell’s thirty-six colleges and halls are home to students at every stage of their journey. They are
-                where you eat, sleep, study and make friends for life — each with its own library, its own character and
-                its own traditions.
-              </p>
-              <p>
-                The University itself provides lectures, laboratories, libraries and examinations, and supports the world-class
-                research for which Brightwell is known. Applicants are considered by the University after first declaring a
-                college preference.
-              </p>
-            </div>
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {[
-                ['Colleges and halls', '36'],
-                ['Undergraduate places', '9,600'],
-                ['International students', '44%'],
-              ].map(([l, v]) => (
-                <div key={l} className="rounded-xl bg-paper p-5 ring-1 ring-line">
-                  <p className="text-sm text-body">{l}</p>
-                  <p className="mt-1 h3 text-brand">{v}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="col-span-full lg:col-span-5">
-            <div className="rounded-xl bg-band p-8">
-              <h3 className="h4 mb-4 text-heading">Colleges and halls at a glance</h3>
-              <ul className="space-y-4">
-                {colleges.map((c) => (
-                  <li key={c.name} className="flex items-start gap-3">
-                    <span aria-hidden className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-accent" />
-                    <div>
-                      <p className="font-semibold text-heading">
-                        {c.name} <span className="font-normal text-body/80">· est. {c.founded}</span>
-                      </p>
-                      <p className="text-sm leading-relaxed">{c.blurb}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      <Section>
+      <Section band>
         <div className="c-container">
-          <SectionHeader title="Discover more about the University" cta={{ to: '/contact', label: 'Contact and visiting' }} />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {SECTIONS.map((s) => (
-              <article key={s.id} id={s.id} className="flex flex-col rounded-xl bg-paper p-6 ring-1 ring-line">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-accent">{s.id}</p>
-                <h3 className="h5 text-heading">{s.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed">{s.body}</p>
-                <div className="mt-5">
-                  <Button variant="secondary" to="/about" icon="arrow">
-                    {s.cta}
-                  </Button>
-                </div>
+          <SectionHeader title="What makes Brightwell different" />
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {PILLARS.map((p) => (
+              <article key={p.title} className="rounded-xl bg-paper p-6 ring-1 ring-line">
+                <span className="inline-grid size-12 place-items-center rounded-lg bg-accent/10 text-accent">
+                  <Icon name={p.icon} className="c-icon--md" />
+                </span>
+                <h3 className="h5 mt-4 text-heading">{p.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed">{p.copy}</p>
               </article>
             ))}
           </div>
         </div>
       </Section>
 
-      <CTA
-        image={IMG.campusLawn}
-        flip
-        eyebrow="Visiting the University"
-        title="Everyone is welcome on campus"
-        cta={{ to: '/events', label: 'See open days' }}
-      >
-        <p>
-          The Broad Court is open to all. Come for a college tour, a museum visit or a coffee — and if you are planning
-          a research collaboration, our welcome team can connect you with the right department.
-        </p>
-      </CTA>
+      <Section>
+        <div className="c-container">
+          <SectionHeader title="Built for three roles" />
+          <div className="grid gap-6 lg:grid-cols-3">
+            {ROLES.map((r) => (
+              <div key={r.title} className="flex flex-col rounded-xl bg-paper p-6 ring-1 ring-line">
+                <h3 className="h4 text-heading">{r.title}</h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed">{r.copy}</p>
+                <div className="mt-5">
+                  <Link to={r.to} className="c-button c-button--secondary !py-2.5">
+                    {r.cta}
+                    <Icon name="arrow" className="c-icon--sm" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section band>
+        <div className="c-container">
+          <div className="dark overflow-hidden rounded-2xl bg-brand text-white">
+            <div className="grid items-center gap-8 p-8 md:grid-cols-2 md:p-12">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-widest text-cyan">Questions?</p>
+                <h2 className="h2 mt-3 text-heading">We're here to help.</h2>
+                <p className="mt-4 max-w-[44ch] text-base leading-relaxed text-navy-body">
+                  Reach the team at <a className="font-semibold text-cyan hover:text-white" href={`mailto:${brand.email}`}>{brand.email}</a> — we reply within one working day.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link to="/courses" className="c-button c-button--primary">Browse courses</Link>
+                  <Link to="/portal/login" className="c-button c-button--secondary">Sign in</Link>
+                </div>
+              </div>
+              <div className="relative hidden md:block">
+                <img src={IMG.tutoring} alt="" className="aspect-[4/3] w-full rounded-xl object-cover" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
     </>
   );
 }

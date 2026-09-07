@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
-import { PageHeading, Card, Badge, DataTable, Bar } from '../../../components/portal/PortalKit.jsx';
+import { Card, Badge, DataTable, Bar } from '../../../components/portal/PortalKit.jsx';
 import { GradePill } from '../../../components/portal/PortalBits.jsx';
 import { Icon } from '../../../components/ui/Kit.jsx';
 import {
   getLearningCourse, studentCourseProgressPct, studentQuizScore,
-  studentAssignmentGrade, setGrade, getGrade,
+  studentAssignmentGrade, setGrade, getGrade, allLessons,
 } from '../../../data/learning.js';
 import { students, gradeFor } from '../../../data/school.js';
 import cn from '../../../lib/cn.js';
@@ -50,45 +50,64 @@ export default function TeacherCourseManage() {
   const { slug } = useParams();
   const course = getLearningCourse(slug);
   const [tab, setTab] = useState('progress');
-  if (!course) return <Navigate to="/portal/learn" replace />;
+  if (!course) return <Navigate to="/portal/teacher/learn" replace />;
 
+  const lessons = allLessons(course);
   const roster = students.filter((s) => (course.level === 'SSS' ? s.class.startsWith('SS') : s.class.startsWith('JSS')));
 
   return (
     <div className="flex flex-col gap-6">
-      <Link to="/portal/learn" className="flex items-center gap-2 text-sm font-medium text-accent hover:underline">
+      <Link to="/portal/teacher/learn" className="flex items-center gap-2 text-sm font-medium text-accent hover:underline">
         <Icon name="chevron-left" className="c-icon--sm" />
-        My e-learning courses
+        My courses
       </Link>
-      <PageHeading
-        title={`Manage — ${course.title}`}
-        subtitle={`${course.subject} · ${course.level === 'JSS' ? 'Junior' : 'Senior'} Secondary · ${roster.length} students on the platform`}
-        actions={
-          <div className="flex gap-1 rounded-lg bg-off-white-50 p-1">
-            {['progress', 'quiz', 'grades'].map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={cn(
-                  'rounded-md px-3 py-1.5 text-sm font-semibold capitalize transition-colors',
-                  tab === t ? 'bg-accent text-white' : 'text-body hover:text-heading'
-                )}
-              >
-                {t === 'grades' ? 'Grading' : t}
-              </button>
-            ))}
+
+      {/* Hero card */}
+      <Card className="overflow-hidden p-0">
+        <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center">
+          <img src={course.img} alt="" className="h-20 w-28 shrink-0 rounded-md object-cover" />
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge tone="cyan">{course.subject}</Badge>
+              <Badge tone="muted">{course.level === 'JSS' ? 'Junior' : 'Senior'} Secondary</Badge>
+              <Badge tone="warn">{lessons.length} lessons</Badge>
+            </div>
+            <h1 className="h3 mt-2 text-heading">{course.title}</h1>
+            <p className="mt-1 text-sm text-body">{roster.length} learners enrolled</p>
           </div>
-        }
-      />
+        </div>
+
+        <div className="flex gap-1 border-t border-line bg-band/40 p-2">
+          {[
+            ['progress', 'Progress'],
+            ['quiz', 'Quiz results'],
+            ['grades', 'Grading'],
+          ].map(([t, label]) => (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              className={cn(
+                'rounded-md px-3 py-1.5 text-sm font-semibold capitalize transition-colors',
+                tab === t ? 'bg-accent text-white shadow-sm' : 'text-body hover:bg-paper hover:text-heading'
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </Card>
 
       {tab === 'progress' && (
         <Card>
-          <h3 className="h4 mb-4 text-heading">Student progress — lessons completed</h3>
+          <h3 className="h4 mb-1 text-heading">Learner progress</h3>
+          <p className="mb-4 text-sm text-body">
+            Lessons finished as a percentage of total lessons in the course.
+          </p>
           <div className="flex flex-col gap-3">
             {roster.map((s) => {
               const pct = studentCourseProgressPct(s.id, course.slug);
               return (
-                <div key={s.id} className="grid grid-cols-[minmax(0,20rem)_1fr_3rem] items-center gap-3 text-sm">
+                <div key={s.id} className="grid grid-cols-[minmax(0,18rem)_1fr_3.5rem] items-center gap-3 text-sm">
                   <div className="min-w-0">
                     <p className="truncate font-medium text-ink">{s.name}</p>
                     <p className="text-xs text-body/70">{s.id} · {s.class}</p>
@@ -104,9 +123,12 @@ export default function TeacherCourseManage() {
 
       {tab === 'quiz' && (
         <Card>
-          <h3 className="h4 mb-4 text-heading">Quiz results — {course.quiz.title}</h3>
+          <h3 className="h4 mb-1 text-heading">Quiz results — {course.quiz.title}</h3>
+          <p className="mb-4 text-sm text-body">
+            Best scores for {course.quiz.questions.length}-question quiz across the roster.
+          </p>
           <DataTable
-            head={['Student', 'Class', 'Score', 'Grade', 'Status']}
+            head={['Learner', 'Class', 'Score', 'Grade', 'Status']}
             rows={roster.map((s) => {
               const q = studentQuizScore(s.id, course.slug);
               const pct = Math.round((q.score / q.total) * 100);
@@ -140,7 +162,7 @@ export default function TeacherCourseManage() {
                 ))}
               </div>
               <p className="mt-3 text-xs text-body/70">
-                Enter a score to record a grade — it saves instantly and updates the student’s record.
+                Enter a score to record a grade — it saves instantly and updates the learner's record.
               </p>
             </Card>
           ))}

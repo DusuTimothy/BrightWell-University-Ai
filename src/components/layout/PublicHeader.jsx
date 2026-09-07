@@ -1,86 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from '../ui/Kit.jsx';
-import { Button } from '../ui/Kit.jsx';
-import { brand, IMG } from '../../data/seed.js';
+import { brand } from '../../data/seed.js';
+import { getPortalUser, ROLE_HOMES, logoutPortal } from '../../lib/portalAuth.js';
 import cn from '../../lib/cn.js';
 
-/* Oxford-style top-bar pill: Admissions | News | Research */
-const UTILITY = [
-  { to: '/admissions', label: 'Admissions' },
-  { to: '/news', label: 'News' },
-  { to: '/research', label: 'Research' },
-];
-
-/* Full-screen menu structure (drilldown like ox.ac.uk) */
-const MENU = [
-  {
-    label: 'Admissions',
-    href: '/admissions',
-    children: [
-      ['/admissions', 'Undergraduate admissions'],
-      ['/admissions', 'Graduate admissions'],
-      ['/courses', 'Courses A–Z'],
-      ['/admissions', 'Fees and funding'],
-      ['/admissions', 'Access Brightwell'],
-      ['/events', 'Open days'],
-    ],
-  },
-  {
-    label: 'Courses',
-    href: '/courses',
-    children: [
-      ['/courses', 'All courses A–Z'],
-      ['/courses', 'Undergraduate courses'],
-      ['/courses', 'Graduate courses'],
-      ['/courses', 'How to apply'],
-    ],
-  },
-  {
-    label: 'News',
-    href: '/news',
-    children: [
-      ['/news', 'Latest news'],
-      ['/news', 'Research news'],
-      ['/news', 'Health and medicine'],
-      ['/news', 'Student stories'],
-      ['/news', 'Awards and funding'],
-    ],
-  },
-  {
-    label: 'E-learning',
-    href: '/learn',
-    children: [
-      ['/learn', 'Browse all courses'],
-      ['/learn?branch=university', 'University courses'],
-      ['/learn', 'Junior Secondary courses'],
-      ['/learn', 'Senior Secondary courses'],
-    ],
-  },
-  {
-    label: 'Research',
-    href: '/research',
-    children: [
-      ['/research', 'Research at Brightwell'],
-      ['/research', 'Research institutes'],
-      ['/research', 'Our researchers'],
-      ['/news', 'Research news'],
-    ],
-  },
-  {
-    label: 'About',
-    href: '/about',
-    children: [
-      ['/about', 'The University'],
-      ['/about', 'Colleges and halls'],
-      ['/about', 'History'],
-      ['/about', 'Libraries and collections'],
-      ['/contact', 'Contact and visiting'],
-    ],
-  },
-  { label: 'Events', href: '/events', children: [['/events', 'What’s on'], ['/events', 'Open days']] },
-  { label: 'Students', href: '/student-life', children: [['/student-life', 'Student life'], ['/student-life', 'Accommodation'], ['/student-life', 'Clubs and societies'], ['/resources', 'Study resources']] },
-  { label: 'Staff', href: '/about#staff', children: [['/about#staff', 'For staff'], ['/about', 'Jobs'], ['/student-life', 'Wellbeing support']] },
+const PRIMARY = [
+  { to: '/courses', label: 'Browse courses' },
+  { to: '/about', label: 'How it works' },
 ];
 
 function Underline({ className, children }) {
@@ -90,12 +17,13 @@ function Underline({ className, children }) {
 export default function PublicHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [stack, setStack] = useState([]);
   const [q, setQ] = useState('');
   const [scrolled, setScrolled] = useState(false);
+  const [menuAccountOpen, setMenuAccountOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef(null);
+  const [user, setUser] = useState(() => getPortalUser());
 
   const overlay = location.pathname === '/';
   const solid = !overlay || scrolled;
@@ -103,8 +31,19 @@ export default function PublicHeader() {
   useEffect(() => {
     setSearchOpen(false);
     setMenuOpen(false);
-    setStack([]);
-  }, [location.pathname, location.search]);
+    setMenuAccountOpen(false);
+  }, [location.pathname]);
+
+  // Re-read the session on route changes so the header stays in sync.
+  useEffect(() => {
+    const sync = () => setUser(getPortalUser());
+    window.addEventListener('storage', sync);
+    window.addEventListener('bw-portal-updated', sync);
+    return () => {
+      window.removeEventListener('storage', sync);
+      window.removeEventListener('bw-portal-updated', sync);
+    };
+  }, []);
 
   useEffect(() => {
     if (!overlay) return;
@@ -115,37 +54,42 @@ export default function PublicHeader() {
   }, [overlay]);
 
   useEffect(() => {
-    if (!menuOpen && !searchOpen) setStack([]);
-  }, [menuOpen, searchOpen]);
-
-  useEffect(() => {
     function onKey(e) {
       if (e.key === 'Escape') {
         setSearchOpen(false);
         setMenuOpen(false);
-        setStack([]);
+        setMenuAccountOpen(false);
       }
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const openAt = (i) => setStack([i]);
-
   function goSearch(e) {
     e.preventDefault();
     setSearchOpen(false);
     const term = q.trim();
-    navigate(term ? `/search?q=${encodeURIComponent(term)}` : '/search');
+    navigate(`/courses${term ? `?q=${encodeURIComponent(term)}` : ''}`);
   }
 
-  const current = stack.length > 0 ? MENU[stack[stack.length - 1]] : null;
+  function signOut() {
+    logoutPortal();
+    window.dispatchEvent(new Event('bw-portal-updated'));
+    setUser(null);
+    setMenuAccountOpen(false);
+    navigate('/');
+  }
+
+  const portalHome = user ? ROLE_HOMES[user.role] : '/portal/login';
+  const initials = user
+    ? user.name.split(' ').map((p) => p[0]).slice(0, 2).join('')
+    : '';
 
   return (
     <header
       className={cn(
-        'z-210 text-white transition-colors duration-300',
-        solid ? 'dark sticky top-0 bg-transparent' : 'absolute inset-x-0 top-0 bg-transparent'
+        'z-50 text-white transition-colors duration-300',
+        solid ? 'sticky top-0 bg-brand' : 'absolute inset-x-0 top-0 bg-transparent'
       )}
       data-js-header
     >
@@ -155,190 +99,246 @@ export default function PublicHeader() {
         onClick={() => {
           setSearchOpen(false);
           setMenuOpen(false);
-          setStack([]);
+          setMenuAccountOpen(false);
         }}
         className={cn(
           'pointer-events-none absolute inset-0 z-10 bg-black/50 transition-opacity duration-300',
-          searchOpen || menuOpen ? 'opacity-100' : 'opacity-0'
+          searchOpen || menuOpen || menuAccountOpen ? 'opacity-100' : 'opacity-0'
         )}
       />
 
       <div className="relative border-b border-white/10">
         <div className="c-container flex items-center gap-4 py-4">
-          <Link to="/" className="mr-auto shrink-0" aria-label="Brightwell University home">
-            <img src="/crest.svg" alt="" width="56" height="56" className="h-14 w-auto" />
+          <Link to="/" className="flex items-center gap-3" aria-label={`${brand.name} home`}>
+            <img src="/crest.svg" alt="" width="40" height="40" className="h-10 w-auto" />
+            <div className="hidden sm:block">
+              <p className="font-heading text-base leading-tight text-heading">{brand.name}</p>
+              <p className="text-[10px] uppercase tracking-widest text-cyan">E-learning platform</p>
+            </div>
           </Link>
 
-          <ul
-            className={cn(
-              'hidden items-center gap-5 rounded-[5px] border px-5 py-2 text-sm lg:flex',
-              solid ? 'border-white/10 bg-brand' : 'border-white/25 bg-brand backdrop-blur-sm'
-            )}
-          >
-            {UTILITY.map((u) => (
-              <li key={u.label} className="group">
-                <Link to={u.to}>
-                  <Underline className="group-hover:animated-underline--on">{u.label}</Underline>
-                </Link>
-              </li>
+          <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 rounded-[5px] border border-white/10 bg-brand px-3 py-1.5 text-sm lg:flex">
+            {PRIMARY.map((p) => (
+              <Link
+                key={p.to}
+                to={p.to}
+                className={cn(
+                  'rounded-md px-3 py-1.5 transition-colors',
+                  location.pathname === p.to ? 'bg-white/10 text-white' : 'text-white/80 hover:bg-white/5 hover:text-white'
+                )}
+              >
+                <Underline className="group-hover:animated-underline--on">{p.label}</Underline>
+              </Link>
             ))}
-          </ul>
+          </nav>
 
-          <div
-            className={cn(
-              'flex items-center gap-5 rounded-[5px] border px-5 py-2 text-sm',
-              solid ? 'border-white/10 bg-brand' : 'border-white/25 bg-brand backdrop-blur-sm'
-            )}
-          >
-            <button type="button" className="group flex items-center gap-2 font-medium" aria-expanded={searchOpen} aria-controls="bw-search" onClick={() => setSearchOpen(!searchOpen)}>
-              <Underline className="group-hover:animated-underline--on">Search</Underline>
+          <div className="ml-auto flex items-center gap-2 lg:ml-3">
+            <button
+              type="button"
+              aria-label="Search courses"
+              aria-expanded={searchOpen}
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="grid size-10 place-items-center rounded-md border border-white/10 bg-brand text-white transition-colors hover:bg-white/5"
+            >
               <Icon name="search" className="c-icon--sm fill-cyan" />
             </button>
-            <button type="button" className="group flex items-center gap-2 font-medium" aria-expanded={menuOpen} aria-controls="bw-menu" onClick={() => setMenuOpen(true)}>
-              <Underline className="group-hover:animated-underline--on">Menu</Underline>
+
+            {user ? <SignedInMenu user={user} initials={initials} portalHome={portalHome} menuAccountOpen={menuAccountOpen} setMenuAccountOpen={setMenuAccountOpen} signOut={signOut} /> : <SignedOutButtons />}
+
+            <button
+              type="button"
+              className="grid size-10 place-items-center rounded-md border border-white/10 bg-brand text-white lg:hidden"
+              aria-label="Open menu"
+              onClick={() => setMenuOpen(true)}
+            >
               <Icon name="menu" className="c-icon--sm fill-cyan" />
             </button>
           </div>
-
-          <Link
-            to="/portal/login"
-            className="group flex bg-brand px-2 py-2 text-sm rounded-md items-center gap-2 font-medium"
-          >
-            <Underline className="group-hover:animated-underline--on">Sign in</Underline>
-            <Icon name="chevron-right" className="c-icon--sm fill-cyan" />
-          </Link>
         </div>
       </div>
 
       {/* ---------- SEARCH OVERLAY ---------- */}
       <div
-        id="bw-search"
         className={cn(
           'absolute inset-x-0 top-full overflow-hidden border-t border-white/10 bg-brand text-white',
-          searchOpen ? 'max-h-[88vh] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
+          searchOpen ? 'max-h-[60vh] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
         )}
-        style={{ transition: 'max-height 0.35s ease, opacity 0.3s ease' }}
+        style={{ transition: 'max-height 0.3s ease, opacity 0.25s ease' }}
         aria-hidden={!searchOpen}
       >
-        <div className="relative overflow-hidden">
-          <div aria-hidden className="absolute left-0 top-[-15%] -translate-y-5%">
-            <img src="/crest.svg" alt="" className="watermark w-184 max-w-none" />
-          </div>
-          <div className="c-container relative py-12 md:py-16">
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="h1 mb-4">Search Brightwell</h2>
-              <p className="mb-8 leading-relaxed text-navy-body">
-                Search the Brightwell University website, or search our undergraduate and graduate courses.
-              </p>
-              <form onSubmit={goSearch} className="flex flex-col gap-2 sm:flex-row">
-                <label htmlFor="bw-search-input" className="sr-only">
-                  Search Brightwell
-                </label>
-                <input
-                  id="bw-search-input"
-                  type="search"
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="What are you looking for?"
-                  className="w-full rounded-md border border-cyan/40 bg-white px-4 py-3 text-sm text-royal outline-none placeholder:text-body/60 focus:border-cyan"
-                />
-                <Button onClick={goSearch}>Search</Button>
-              </form>
-              <div className="mt-6 flex flex-col justify-center gap-2 sm:flex-row">
-                <Button variant="secondary" to="/courses">Undergraduate courses</Button>
-                <Button variant="secondary" to="/courses">Graduate courses</Button>
-              </div>
+        <div className="c-container py-8 md:py-10">
+          <form onSubmit={goSearch} className="flex flex-col gap-3 sm:flex-row">
+            <label htmlFor="bw-search-input" className="sr-only">
+              Search courses
+            </label>
+            <div className="relative flex-1">
+              <Icon name="search" className="c-icon--sm absolute left-4 top-1/2 -translate-y-1/2 fill-cyan" />
+              <input
+                id="bw-search-input"
+                type="search"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Search for a course, subject or topic…"
+                autoFocus={searchOpen}
+                className="w-full rounded-md border border-cyan/40 bg-white pl-11 pr-4 py-3 text-sm text-royal outline-none placeholder:text-body/60 focus:border-cyan"
+              />
             </div>
+            <button type="submit" className="c-button c-button--primary">
+              Search
+            </button>
+          </form>
+          <div className="mt-4 flex flex-wrap gap-2 text-xs text-white/70">
+            <span>Try:</span>
+            {['Mathematics', 'Physics', 'Computer Science', 'Biology', 'Economics'].map((t) => (
+              <Link
+                key={t}
+                to={`/courses?q=${encodeURIComponent(t)}`}
+                onClick={() => setSearchOpen(false)}
+                className="rounded-full border border-white/15 px-3 py-1 hover:border-cyan hover:text-white"
+              >
+                {t}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* ---------- MENU OVERLAY ---------- */}
+      {/* ---------- MOBILE MENU ---------- */}
       <div
-        id="bw-menu"
         className={cn(
-          'absolute inset-x-0 top-full overflow-hidden border-t border-white/10 bg-brand text-white',
-          menuOpen ? 'max-h-[88vh] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
+          'absolute inset-x-0 top-full overflow-hidden border-t border-white/10 bg-brand text-white lg:hidden',
+          menuOpen ? 'max-h-[60vh] opacity-100' : 'pointer-events-none max-h-0 opacity-0'
         )}
-        style={{ transition: 'max-height 0.35s ease, opacity 0.3s ease' }}
+        style={{ transition: 'max-height 0.3s ease, opacity 0.25s ease' }}
         aria-hidden={!menuOpen}
       >
-        <div className="relative">
-          <div aria-hidden className="absolute left-0 top-[-15%] -translate-y-5%">
-            <img src="/crest.svg" alt="" className="watermark w-184 max-w-none" />
-          </div>
-          <div ref={menuRef} className="c-container relative grid gap-10 py-8 md:py-12 lg:grid-cols-12">
-            {/* drilldown panes */}
-            <div className="relative min-h-88 lg:col-span-7">
-              <div className={cn('transition-opacity', stack.length === 0 ? 'opacity-100' : 'pointer-events-none opacity-0')}>
-                <ul>
-                  {MENU.map((item, i) => (
-                    <li key={item.label} className="border-t border-white/10">
-                      <button
-                        type="button"
-                        onClick={() => openAt(i)}
-                        className="group flex w-full items-center justify-between py-4 text-left font-heading text-xl focus-visible:outline-none md:justify-start md:gap-8"
-                      >
-                        <Underline className="group-hover:animated-underline--on">{item.label}</Underline>
-                        <Icon name="arrow" className="c-icon--sm -rotate-90 fill-cyan" />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {current && (
-                <div className="animate-fade-block absolute inset-0">
-                  <button
-                    type="button"
-                    onClick={() => setStack(stack.slice(0, -1))}
-                    className="group flex w-full items-center gap-2 border-b border-white/10 py-4 text-left"
-                  >
-                    <Icon name="chevron-left" className="c-icon--sm -scale-x-100" />
-                    <Underline className="group-hover:animated-underline--on">Go back</Underline>
-                  </button>
+        <div className="c-container py-6">
+          <nav aria-label="Mobile">
+            <ul className="flex flex-col">
+              {PRIMARY.map((p) => (
+                <li key={p.to} className="border-t border-white/10 first:border-0">
                   <Link
-                    to={current.href}
+                    to={p.to}
                     onClick={() => setMenuOpen(false)}
-                    className="block border-b border-white/10 py-4 font-heading text-xl"
+                    className="group flex w-full items-center justify-between py-4 text-left font-heading text-lg"
                   >
-                    <Underline className="animated-underline--on">{current.label}</Underline>
+                    <Underline className="group-hover:animated-underline--on">{p.label}</Underline>
+                    <Icon name="chevron-right" className="c-icon--sm fill-cyan" />
                   </Link>
-                  <ul className="pt-2">
-                    {current.children.map(([to, label]) => (
-                      <li key={label}>
-                        <Link to={to} onClick={() => setMenuOpen(false)} className="group flex w-full items-center justify-between py-3 text-left">
-                          <span className="text-white/85 transition-colors group-hover:text-white">{label}</span>
-                          <Icon name="chevron-down" className="c-icon--xs -rotate-90 fill-cyan" />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                </li>
+              ))}
+              {user && (
+                <li className="border-t border-white/10">
+                  <Link
+                    to={portalHome}
+                    onClick={() => setMenuOpen(false)}
+                    className="group flex w-full items-center justify-between py-4 text-left font-heading text-lg"
+                  >
+                    <span>
+                      <span className="block text-xs font-normal text-cyan">Signed in as {user.name}</span>
+                      <Underline className="group-hover:animated-underline--on">Go to dashboard</Underline>
+                    </span>
+                    <Icon name="chevron-right" className="c-icon--sm fill-cyan" />
+                  </Link>
+                </li>
               )}
-            </div>
-
-            {/* promo card */}
-            <div className="hidden lg:col-span-5 lg:block">
-              <div className="dark overflow-hidden rounded-md bg-brand ring-1 ring-white/10">
-                <div className="overflow-hidden">
-                  <img src={IMG.graduation} alt="" className="aspect-video h-44 w-full object-cover" />
-                </div>
-                <div className="p-6">
-                  <h3 className="h4 text-heading">Support Brightwell</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-navy-body">
-                    Together, let’s turn today’s biggest challenges into tomorrow’s boldest breakthroughs.
-                  </p>
-                  <div className="mt-4">
-                    <Button to="/about">Discover more</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            </ul>
+          </nav>
         </div>
       </div>
+    </header>
+  );
+}
 
-      </header>
+function SignedOutButtons() {
+  return (
+    <>
+      <Link
+        to="/portal/login"
+        className="hidden items-center gap-2 rounded-md border border-white/10 bg-brand px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/5 lg:inline-flex"
+      >
+        Sign in
+        <Icon name="chevron-right" className="c-icon--sm fill-cyan" />
+      </Link>
+      <Link
+        to="/portal/login"
+        className="rounded-md bg-cyan px-4 py-2.5 text-sm font-semibold text-brand transition-colors hover:bg-cyan-deep hover:text-white lg:hidden"
+      >
+        Sign in
+      </Link>
+    </>
+  );
+}
+
+function SignedInMenu({ user, initials, portalHome, menuAccountOpen, setMenuAccountOpen, signOut }) {
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={menuAccountOpen}
+        onClick={() => setMenuAccountOpen(!menuAccountOpen)}
+        className="flex items-center gap-3 rounded-md border border-white/10 bg-brand py-1.5 pl-1.5 pr-3 text-sm text-white transition-colors hover:bg-white/5"
+      >
+        <span className="grid size-8 place-items-center rounded-full bg-accent font-heading text-xs text-white">
+          {initials}
+        </span>
+        <span className="hidden flex-col text-left leading-tight lg:flex">
+          <span className="text-[10px] uppercase tracking-widest text-cyan">Signed in</span>
+          <span className="text-sm font-semibold">{user.name}</span>
+        </span>
+        <Icon name="chevron-down" className="c-icon--xs fill-cyan/70" />
+      </button>
+
+      <div
+        role="menu"
+        className={cn(
+          'absolute right-0 top-full z-20 mt-2 w-56 origin-top-right overflow-hidden rounded-lg bg-white text-royal shadow-2xl ring-1 ring-black/5 transition-all',
+          menuAccountOpen ? 'pointer-events-auto opacity-100 translate-y-0' : 'pointer-events-none opacity-0 -translate-y-1'
+        )}
+      >
+        <div className="border-b border-line px-4 py-3">
+          <p className="text-sm font-semibold text-heading">{user.name}</p>
+          <p className="truncate text-xs text-body">{user.email || user.username}</p>
+          <p className="mt-1 text-[11px] font-semibold uppercase tracking-widest text-accent">{user.title}</p>
+        </div>
+        <Link
+          to={portalHome}
+          onClick={() => setMenuAccountOpen(false)}
+          role="menuitem"
+          className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-band"
+        >
+          <Icon name="layout-dashboard" className="c-icon--sm fill-accent" />
+          Go to dashboard
+        </Link>
+        <Link
+          to="/portal/student/courses"
+          onClick={() => setMenuAccountOpen(false)}
+          role="menuitem"
+          className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-band"
+        >
+          <Icon name="book-open" className="c-icon--sm fill-accent" />
+          My courses
+        </Link>
+        <Link
+          to="/courses"
+          onClick={() => setMenuAccountOpen(false)}
+          role="menuitem"
+          className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-band"
+        >
+          <Icon name="search" className="c-icon--sm fill-accent" />
+          Browse catalogue
+        </Link>
+        <button
+          type="button"
+          onClick={signOut}
+          role="menuitem"
+          className="flex w-full items-center gap-2 border-t border-line px-4 py-2.5 text-left text-sm font-semibold text-red-600 hover:bg-red-50"
+        >
+          <Icon name="arrow-right" className="c-icon--sm" />
+          Sign out
+        </button>
+      </div>
+    </div>
   );
 }

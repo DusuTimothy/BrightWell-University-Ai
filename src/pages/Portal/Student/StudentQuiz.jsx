@@ -9,22 +9,26 @@ export default function StudentQuiz() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const course = getLearningCourse(slug);
-  if (!course) return <Navigate to="/portal/learn" replace />;
+  if (!course) return <Navigate to="/portal/student/learn" replace />;
   const prev = getQuizScore(course.slug);
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <Link to={`/portal/learn/${course.slug}`} className="flex items-center gap-2 text-sm font-medium text-accent hover:underline">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Link to={`/portal/student/learn/${course.slug}`} className="flex items-center gap-2 text-sm font-medium text-accent hover:underline">
           <Icon name="chevron-left" className="c-icon--sm" />
           {course.title}
         </Link>
-        {prev && <Badge tone={prev.score / prev.total >= 0.5 ? 'success' : 'warn'}>{prev.score}/{prev.total}</Badge>}
+        {prev && (
+          <Badge tone={prev.score / prev.total >= 0.5 ? 'success' : 'warn'}>
+            Best score: {prev.score}/{prev.total}
+          </Badge>
+        )}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8">
-          <QuizRunner course={course} onReset={() => navigate(`/portal/learn/${course.slug}`)} />
+          <QuizRunner course={course} onReset={() => navigate(`/portal/student/learn/${course.slug}`)} />
         </div>
         <aside className="lg:col-span-4">
           <Card className="sticky top-8">

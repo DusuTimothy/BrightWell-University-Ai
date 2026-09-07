@@ -15,7 +15,7 @@ export default function NotFoundPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button to="/">Back to the homepage</Button>
             <Button variant="secondary" to="/courses">
-              Browse courses A–Z
+              Browse courses
             </Button>
           </div>
         </div>

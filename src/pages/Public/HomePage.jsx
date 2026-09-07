@@ -1,343 +1,268 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CTA, Button, Carousel, CardDivider, Icon, LazyImg, OverlayCard, Section, SectionHeader, TeaserCard } from '../../components/ui/Kit.jsx';
-import { IMG, VIDEO, brand, home, news } from '../../data/seed.js';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Icon, Section, SectionHeader } from '../../components/ui/Kit.jsx';
+import { IMG, stats, home } from '../../data/seed.js';
+import { learningCourses, courseDuration, BRANCHES, levelLabel } from '../../data/learning.js';
+import { getPortalUser } from '../../lib/portalAuth.js';
 
-const HERO_PROMOS = [
-  { title: 'Undergraduate admissions, outreach and open days', href: '/admissions', img: IMG.studentsGroup },
-  { title: 'Graduate admissions and research degrees', href: '/admissions', img: IMG.library },
-  { title: 'Browse the full course listing A–Z', href: '/courses', img: IMG.studyOutdoor },
-];
-
-const MAKE_IT = [
+const FEATURED_CARDS = [
   {
-    title: 'Courses',
-    href: '/courses',
-    img: IMG.hall,
-    copy: 'Do you already know what you want to study? Take time to explore your options and look beyond the obvious — the most inspiring course might be one you didn’t know existed.',
+    title: 'Self-paced video lessons',
+    copy: 'Bite-sized lessons taught by subject experts — pause, rewind, and learn at the speed that suits you.',
+    icon: 'play',
+    accent: 'bg-cyan/15 text-cyan-deep',
   },
   {
-    title: 'College life',
-    href: '/student-life',
-    img: IMG.campusLawn,
-    copy: 'Small, friendly academic communities make Brightwell the special place it is. Our halls and colleges support you while you focus on study, friendship and opportunity.',
+    title: 'End-of-course quizzes',
+    copy: 'Each course ends with a multi-question quiz. Your best score is saved to your learner record.',
+    icon: 'award',
+    accent: 'bg-pill/20 text-pill-ink',
   },
   {
-    title: 'Applying',
-    href: '/admissions',
-    img: IMG.writing,
-    copy: 'Considering an application can feel like a big step, but the only thing our students have in common is academic ability and intellectual curiosity — they come from all over the world.',
-  },
-  {
-    title: 'Access Brightwell',
-    href: '/admissions',
-    img: IMG.tutoring,
-    copy: 'Deciding whether and where to study is a big step. Our free in-person and online events give you the knowledge, confidence and support to make the choice that’s right for you.',
+    title: 'Portfolio assignments',
+    copy: 'Submit short pieces of work for every course. Instructors mark and respond to your portfolio.',
+    icon: 'clipboard',
+    accent: 'bg-emerald-500/15 text-emerald-700',
   },
 ];
 
-const GRAD_CARDS = [
-  { title: 'Where do I start?', copy: 'If you’re considering graduate study at Brightwell, this step-by-step guide will get you started.' },
-  { title: 'Find your postgraduate course', copy: 'Search our comprehensive A–Z of graduate courses. Filter by type and search by keyword.' },
-  { title: 'Departments offering courses', copy: 'A wide range of departments offer graduate courses across all four academic divisions.' },
-  { title: 'Funding your graduate study', copy: 'Find out more about funding including scholarships, research councils and studentships.' },
-];
-
-const EXCELLENCE = [
-  { title: 'The Brightwell Excellence campaign', copy: 'Together, let’s turn today’s biggest challenges into tomorrow’s boldest breakthroughs.', img: IMG.conference },
-  { title: 'Climate change and the environment', copy: 'When the planet calls, we always answer.', img: IMG.field },
-  { title: 'Improving health: living longer, healthier lives', copy: 'We’re putting better health into everyone’s hands.', img: IMG.microscope },
-  { title: 'Society, community and citizenship', copy: 'While others step aside, we step up.', img: IMG.studentsWalking },
-];
-
-const EXPLORE = [
-  { title: 'Colleges and halls', copy: 'Links to all Brightwell colleges, halls and graduate houses.', img: IMG.hall, href: '/about' },
-  { title: 'Divisions and departments', copy: 'List of our academic divisions and departments.', img: IMG.city, href: '/about' },
-  { title: 'The Ogun libraries', copy: 'One of West Africa’s great manuscript collections, and 13 million items more.', img: IMG.library, href: '/about' },
-  { title: 'Jobs at Brightwell', copy: 'Build a career in an organisation that changes lives.', img: IMG.conference, href: '/about#staff' },
-];
-
-const STUDYING = [
-  { title: 'Undergraduate admissions and outreach', copy: 'Do you love to question, have an appetite for knowledge and consistently achieve top grades? Brightwell might be the place for you.', href: '/admissions' },
-  { title: 'Graduate admissions', copy: 'A unique experience, including the opportunity to work with leading academics and world-class laboratories and collections.', href: '/admissions' },
-  { title: 'Lifelong learning', copy: 'Part-time short courses, online and in person, bring a Brightwell education within reach of anyone with the motivation.', href: '/courses' },
-  { title: 'Brightwell students', copy: 'Welcome to the students’ site — accommodation, clubs, wellbeing and everything in between.', href: '/student-life' },
+const HOW_IT_WORKS = [
+  { step: '01', title: 'Browse the catalogue', copy: 'Pick from secondary-school or university courses across sciences, humanities and more.' },
+  { step: '02', title: 'Sign in & enrol', copy: 'Create a free account, then enrol in as many courses as you like with one click.' },
+  { step: '03', title: 'Learn at your pace', copy: 'Watch the video lesson, review the notes, mark complete and take the quiz.' },
+  { step: '04', title: 'Submit & progress', copy: 'Complete assignments, track your progress on a personal dashboard and earn a record.' },
 ];
 
 export default function HomePage() {
-  const [level, setLevel] = useState('undergraduate');
-  const [q, setQ] = useState('');
-  const navigate = useNavigate();
-
-  function searchCourses(e) {
-    e.preventDefault();
-    const term = q.trim();
-    navigate(`/courses${term || level ? `?level=${level}${term ? `&q=${encodeURIComponent(term)}` : ''}` : ''}`);
-  }
+  const user = getPortalUser();
+  const featured = [...learningCourses]
+    .sort((a, b) => b.modules.reduce((acc, m) => acc + m.lessons.length, 0) - a.modules.reduce((acc, m) => acc + m.lessons.length, 0))
+    .slice(0, 3);
 
   return (
     <>
       {/* ========================================================= HERO */}
-      <section className="dark relative overflow-hidden bg-brand pb-0 text-white" data-component-theme="dark">
-        <div className="relative">
-          <video
-            className="h-[62vh] w-full object-cover md:h-[74vh]"
-            muted
-            loop
-            autoPlay
-            playsInline
-            poster={IMG.hero}
-            aria-hidden
-          >
-            <source src="/video/campus.webm" type="video/webm" />
-            <source src={VIDEO.ambient} type="video/quicktime" />
-            <source src={VIDEO.hd} type="video/webm" />
-          </video>
-          <div aria-hidden className="absolute inset-0 hero-scrim" />
-          <div className="c-container relative z-10 -mt-44 pb-6 pt-40 md:-mt-56 md:pb-8">
-            <div className="max-w-4xl">
-              <h1 className="h1 text-heading md:whitespace-nowrap" style={{ fontSize: 'clamp(2.6rem, 1.6rem + 4.4vw, 4.5rem)' }}>
-                {brand.name}
-              </h1>
-              <p className="mt-5 max-w-[48ch] text-lg leading-relaxed text-navy-body">{brand.tagline}</p>
-            </div>
-          </div>
+      <section className="dark relative overflow-hidden bg-brand text-white">
+        <div className="absolute inset-0">
+          <img src={IMG.hero} alt="" className="h-full w-full object-cover opacity-30" />
         </div>
+        <div className="absolute inset-0 hero-scrim" />
 
-        {/* Course search panel */}
-        <div className="c-container pb-0">
-          <form onSubmit={searchCourses} className="relative z-10 rounded-lg bg-brand p-6 text-white shadow-2xl ring-1 ring-white/10 md:p-8">
-            <div className="md:flex md:flex-wrap md:items-center md:gap-10">
-              <div className="max-w-xl flex-1">
-                <h2 className="h3 text-heading md:mb-0">Start your Brightwell journey; search our courses now.</h2>
-              </div>
-              <div className="mt-4 flex-1 md:mt-0">
-                <fieldset className="flex flex-wrap gap-x-8 p-0">
-                  <legend className="sr-only">Course type</legend>
-                  {[
-                    ['undergraduate', 'Undergraduate'],
-                    ['graduate', 'Graduate'],
-                  ].map(([val, label]) => (
-                    <label key={val} className="group flex cursor-pointer items-center gap-2 text-sm">
-                      <input
-                        type="radio"
-                        name="course-type"
-                        value={val}
-                        checked={level === val}
-                        onChange={() => setLevel(val)}
-                        className="sr-only"
-                      />
-                      <span className="flex h-4 w-4 items-center justify-center rounded-full border border-cyan/60 transition-colors group-has-[:checked]:border-cyan">
-                        <span className="hidden h-2 w-2 rounded-full bg-cyan group-has-[:checked]:block" />
-                      </span>
-                      {label}
-                    </label>
-                  ))}
-                </fieldset>
-                <div className="mt-3 flex flex-col gap-2 md:flex-row">
-                  <label htmlFor="course-search" className="sr-only">
-                    Search for a course
-                  </label>
-                  <input
-                    id="course-search"
-                    type="search"
-                    value={q}
-                    onChange={(e) => setQ(e.target.value)}
-                    placeholder="Search for a course, e.g. medicine, physics, law…"
-                    className="w-full flex-1 rounded-md border border-cyan/40 bg-white px-4 py-3 text-sm text-royal outline-none placeholder:text-body/60 focus:border-cyan"
-                  />
-                  <Button type="submit">Search courses</Button>
+        <div className="c-container relative grid items-center gap-10 py-24 md:grid-cols-12 md:py-32">
+          <div className="md:col-span-7">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-cyan">
+              <span className="size-1.5 rounded-full bg-cyan" />
+              New term enrolments open
+            </span>
+            <h1 className="h1 mt-5 text-heading md:whitespace-nowrap" style={{ fontSize: 'clamp(2.4rem, 1.4rem + 4.2vw, 4.5rem)' }}>
+              Learn what you love,
+              <br />
+              at a pace that fits.
+            </h1>
+            <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-navy-body">
+              Brightwell Academy is a focused online learning platform for secondary-school and university study.
+              Watch video lessons, take quizzes and submit assignments — all in one place.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/courses" className="c-button c-button--primary">
+                Browse courses
+                <Icon name="arrow" className="c-icon--sm" />
+              </Link>
+              <Link to="/portal/login" className="c-button c-button--secondary">
+                {user ? 'Go to your dashboard' : 'Sign in'}
+              </Link>
+            </div>
+
+            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-5">
+              {stats.map((s) => (
+                <div key={s.label} className="border-l border-white/15 pl-4">
+                  <dt className="text-xs text-white/70">{s.label}</dt>
+                  <dd className="mt-1 font-heading text-xl text-heading">{s.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="md:col-span-5">
+            <div className="relative">
+              <div className="absolute -left-4 -top-4 size-20 rounded-full bg-cyan/20 blur-2xl" aria-hidden />
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-brand-soft/50 shadow-2xl">
+                <img src={IMG.heroOverlay} alt="" className="aspect-[4/3] w-full object-cover" />
+                <div className="space-y-3 p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="grid size-10 place-items-center rounded-full bg-cyan text-brand">
+                      <Icon name="play" className="c-icon--sm" />
+                    </span>
+                    <div className="flex-1">
+                      <p className="text-xs text-white/70">Now playing</p>
+                      <p className="text-sm font-semibold">Quadratic expressions</p>
+                    </div>
+                    <span className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-cyan">20 min</span>
+                  </div>
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+                    <div className="h-full w-2/3 rounded-full bg-cyan" />
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-white/70">
+                    <span>Lesson 3 of 12</span>
+                    <span>66% complete</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-
-        {/* Hero promo cards */}
-        <div className="c-container py-10 md:py-12">
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-            {HERO_PROMOS.map((p) => (
-              <OverlayCard key={p.title} item={p} imgSrc={p.img} aspect="aspect-[16/10] lg:aspect-[4/5]" />
-            ))}
           </div>
         </div>
       </section>
 
-      {/* ========================================= SHORT COURSES CTA */}
-      <CTA
-        image={IMG.classroom}
-        eyebrow="Short courses for curious minds"
-        title="Learning for everyone"
-        cta={{ to: '/courses', label: 'Browse short courses' }}
-      >
-        <p>
-          Explore the Brightwell Lifelong Learning programme of online and in-person short courses — from a
-          weekend on African economic history to a summer school in planetary science.
-        </p>
-      </CTA>
-
-      {/* ========================================= LATEST NEWS */}
-      <Section>
+      {/* ========================================================= PILLARS */}
+      <Section band>
         <div className="c-container">
-          <SectionHeader title="Latest news" cta={{ to: '/news', label: 'View all news' }} />
-          <div className="grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 xl:grid-cols-4">
-            {news.slice(0, 4).map((n) => (
-              <TeaserCard key={n.id} item={n} imgSrc={n.img} />
+          <SectionHeader title="Built for focused learning" />
+          <div className="grid gap-6 md:grid-cols-3">
+            {FEATURED_CARDS.map((c) => (
+              <article key={c.title} className="rounded-xl bg-paper p-6 ring-1 ring-line">
+                <span className={`inline-grid size-12 place-items-center rounded-lg ${c.accent}`}>
+                  <Icon name={c.icon} className="c-icon--md" />
+                </span>
+                <h3 className="h5 mt-5 text-heading">{c.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed">{c.copy}</p>
+              </article>
             ))}
           </div>
         </div>
       </Section>
 
-      {/* ========================================= WHAT YOU MAKE IT */}
+      {/* ========================================================= BRANCHES */}
       <Section>
         <div className="c-container">
-          <SectionHeader title="Brightwell is what you make it" cta={{ to: '/admissions', label: 'Undergraduate admissions' }} />
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
-            {MAKE_IT.map((c, i) => (
-              <article key={c.title} data-component-id="teaser" className="group/teaser">
-                <div className="max-xl:flex-col md:flex md:flex-col xl:block">
-                  <div className="mb-3 max-md:flex-none">
-                    <LazyImg src={c.img} className="tile-radius" />
+          <SectionHeader
+            title="Pick the path that fits"
+            cta={{ to: '/courses', label: 'See all courses' }}
+          />
+          <div className="grid gap-6 lg:grid-cols-2">
+            {BRANCHES.map((b) => {
+              const count = learningCourses.filter((c) => c.branch === b.id).length;
+              return (
+                <Link
+                  key={b.id}
+                  to={`/courses?branch=${b.id}`}
+                  className="group relative overflow-hidden rounded-xl bg-paper p-7 ring-1 ring-line transition-shadow hover:shadow-lg"
+                >
+                  <div className="flex items-start gap-4">
+                    <span className={cn(
+                      'grid size-12 shrink-0 place-items-center rounded-lg',
+                      b.id === 'university' ? 'bg-cyan/15 text-cyan-deep' : 'bg-pill/20 text-pill-ink'
+                    )}>
+                      <Icon name={b.id === 'university' ? 'graduation-cap' : 'book-open'} className="c-icon--md" />
+                    </span>
+                    <div className="flex-1">
+                      <h3 className="h4 text-heading">
+                        <span className="animated-underline animated-underline--off group-hover:animated-underline--on">{b.label}</span>
+                      </h3>
+                      <p className="mt-1 text-sm text-body">{b.tagline}</p>
+                      <p className="mt-3 text-xs font-semibold text-accent">{count} courses available</p>
+                    </div>
+                    <Icon name="arrow" className="c-icon--sm fill-accent transition-transform group-hover:translate-x-1" />
                   </div>
-                  <div className="flex flex-col gap-3">
-                    <h3 className="h5 text-heading">
-                      <a href={c.href} className="animated-underline animated-underline--off group-hover/teaser:animated-underline--on">
-                        {c.title}
-                      </a>
-                    </h3>
-                    <p className="text-sm leading-relaxed">{c.copy}</p>
-                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </Section>
+
+      {/* ========================================================= FEATURED COURSES */}
+      <Section band>
+        <div className="c-container">
+          <SectionHeader
+            title="Featured courses"
+            cta={{ to: '/courses', label: 'Browse the catalogue' }}
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((c) => (
+              <Link
+                key={c.slug}
+                to={`/courses/${c.slug}`}
+                className="group flex flex-col overflow-hidden rounded-xl bg-paper ring-1 ring-line transition-shadow hover:shadow-lg"
+              >
+                <div className="relative overflow-hidden">
+                  <img src={c.img} alt="" className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <span className="absolute left-3 top-3 rounded-md bg-brand px-2 py-1 text-[11px] font-semibold text-cyan">
+                    {c.subject}
+                  </span>
                 </div>
-              </article>
+                <div className="flex flex-1 flex-col p-5">
+                  <p className="text-xs font-semibold text-accent">{c.branch === 'university' ? 'University' : 'Secondary School'} · {levelLabel(c)}</p>
+                  <h3 className="h5 mt-1 text-heading">
+                    <span className="animated-underline animated-underline--off group-hover:animated-underline--on">{c.title}</span>
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{c.blurb}</p>
+                  <dl className="mt-4 flex items-center gap-4 text-xs text-body/80">
+                    <div className="flex items-center gap-1">
+                      <Icon name="play" className="c-icon--xs fill-accent" />
+                      {c.modules.reduce((acc, m) => acc + m.lessons.length, 0)} lessons
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Icon name="clock" className="c-icon--xs fill-accent" />
+                      {Math.round(courseDuration(c) / 60)} hrs
+                    </div>
+                    <div className="ml-auto">{c.teacher.split(' ').slice(-1)[0]}</div>
+                  </dl>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </Section>
 
-      {/* ========================================= THE TUTORIAL */}
-      <CTA
-        image={IMG.hall}
-        flip
-        eyebrow="The Brightwell Tutorial"
-        title="Teaching that transforms how you think"
-        cta={{ href: 'https://www.youtube.com', label: 'Watch the video' }}
-      >
-        <p>
-          Tutorials are central to learning at Brightwell and offer a very rare level of personalised attention
-          from academic experts — typically two or three students meeting a world-leading academic each week.
-        </p>
-      </CTA>
-
-      {/* ========================================= GRADUATE ADMISSIONS */}
-      <Section band>
-        <div className="c-container">
-          <SectionHeader title="Applying to Brightwell as a graduate student" cta={{ to: '/admissions', label: 'Graduate admissions' }} />
-          <div className="grid grid-cols-1 gap-x-6 gap-y-4 lg:grid-cols-4">
-            {GRAD_CARDS.map((c, i) => (
-              <article key={c.title}>
-                {i > 0 && <CardDivider />}
-                <h3 className="h5 mb-2 text-heading">{c.title}</h3>
-                <p className="text-sm leading-relaxed">{c.copy}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ========================================= MEETING MINDS */}
-      <CTA
-        image={IMG.conference}
-        eyebrow="Alumni weekend"
-        title="Join us on 18–20 September when Meeting Minds returns"
-        cta={{ href: '/events', label: 'View the programme' }}
-      >
-        <p>A weekend of discovery, connection and celebration across our colleges and halls.</p>
-      </CTA>
-
-      {/* ========================================= DISCOVER MORE */}
-      <Section band>
-        <div className="c-container">
-          <SectionHeader title="Discover more from Brightwell" />
-          <Carousel items={home.carousel} />
-        </div>
-      </Section>
-
-      {/* ========================================= SPOTLIGHT */}
+      {/* ========================================================= HOW IT WORKS */}
       <Section>
         <div className="c-container">
-          <SectionHeader title="Spotlight on humanity in an age of global change" cta={{ to: '/news', label: 'More features' }} />
-          <div className="grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 xl:grid-cols-4">
-            {news.slice(4, 8).map((n) => (
-              <TeaserCard key={n.id} item={n} imgSrc={n.img} />
+          <SectionHeader title="How Brightwell works" />
+          <ol className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {HOW_IT_WORKS.map((s) => (
+              <li key={s.step} className="rounded-xl bg-band/40 p-6 ring-1 ring-line">
+                <span className="font-heading text-3xl text-accent">{s.step}</span>
+                <h3 className="h5 mt-3 text-heading">{s.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed">{s.copy}</p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </Section>
 
-      {/* ========================================= EXCELLENCE */}
+      {/* ========================================================= CTA */}
       <Section band>
         <div className="c-container">
-          <SectionHeader title="Brightwell Excellence" cta={{ to: '/about#giving', label: 'Discover more' }} />
-          <div className="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2 lg:grid-cols-4">
-            {EXCELLENCE.map((c, i) => (
-              <article key={c.title} className="group/teaser">
-                {i > 0 && <CardDivider />}
-                <div className="mb-3">
-                  <LazyImg src={c.img} className="tile-radius" />
+          <div className="dark overflow-hidden rounded-2xl bg-brand text-white">
+            <div className="grid items-center gap-8 p-8 md:grid-cols-2 md:p-12">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-widest text-cyan">Start today</p>
+                <h2 className="h2 mt-3 text-heading">Ready when you are.</h2>
+                <p className="mt-4 max-w-[44ch] text-base leading-relaxed text-navy-body">
+                  Sign in to track your progress across every course. Your lessons, quizzes and assignments
+                  wait where you left them.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link to="/portal/login" className="c-button c-button--primary">
+                    {user ? 'Open your dashboard' : 'Sign in to learn'}
+                    <Icon name="arrow" className="c-icon--sm" />
+                  </Link>
+                  <Link to="/courses" className="c-button c-button--secondary">
+                    Browse courses
+                  </Link>
                 </div>
-                <h3 className="h5 mb-2 text-heading">
-                  <span className="animated-underline animated-underline--off group-hover/teaser:animated-underline--on">{c.title}</span>
-                </h3>
-                <p className="text-sm leading-relaxed">{c.copy}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ========================================= EXPLORE */}
-      <Section>
-        <div className="c-container">
-          <SectionHeader title="Explore the University" cta={{ to: '/about', label: 'More about the University' }} />
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
-            {EXPLORE.map((c) => (
-              <article key={c.title} data-component-id="teaser" className="group/teaser">
-                <div className="mb-3">
-                  <LazyImg src={c.img} className="tile-radius" />
-                </div>
-                <h3 className="h5 text-heading">
-                  <a href={c.href} className="animated-underline animated-underline--off group-hover/teaser:animated-underline--on">
-                    {c.title}
-                  </a>
-                </h3>
-                <div className="c-wysiwyg mt-3 text-sm leading-relaxed">
-                  <p>{c.copy}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ========================================= STUDYING AT BRIGHTWELL */}
-      <Section band>
-        <div className="c-container">
-          <SectionHeader title="Studying at Brightwell" />
-          <div className="grid grid-cols-1 gap-x-6 gap-y-4 lg:grid-cols-4">
-            {STUDYING.map((c, i) => (
-              <article key={c.title}>
-                {i > 0 && <CardDivider />}
-                <h3 className="h5 mb-2 text-heading">
-                  <a href={c.href} className="animated-underline animated-underline--off hover:animated-underline--on">
-                    {c.title}
-                  </a>
-                </h3>
-                <p className="text-sm leading-relaxed">{c.copy}</p>
-              </article>
-            ))}
+              </div>
+              <div className="relative hidden md:block">
+                <img src={IMG.classroom} alt="" className="aspect-[4/3] w-full rounded-xl object-cover" />
+              </div>
+            </div>
           </div>
         </div>
       </Section>
     </>
   );
+}
+
+function cn(...classes) {
+  return classes.filter(Boolean).join(' ');
 }
