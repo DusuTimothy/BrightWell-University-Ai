@@ -50,9 +50,9 @@ export default function StudentBrowse() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search courses…"
-            className="flex-1 rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+            className="flex-1 rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
           />
-          <select value={level} onChange={(e) => setLevel(e.target.value)} className="rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent">
+          <select value={level} onChange={(e) => setLevel(e.target.value)} className="rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent">
             <option value="all">All levels</option>
             <option value="JSS">Junior Secondary</option>
             <option value="SSS">Senior Secondary</option>
@@ -74,7 +74,7 @@ export default function StudentBrowse() {
             <p className="mt-1 flex-1 text-sm text-body">{c.blurb}</p>
             <p className="mt-2 text-xs text-body/70">{Math.round(courseDuration(c) / 60)} hrs · {c.modules.reduce((a, m) => a + m.lessons.length, 0)} lessons</p>
             <div className="mt-3 flex gap-2">
-              <Link to={`/portal/student/courses/${c.slug}`} className="flex-1 c-button c-button--primary !py-2 text-center">
+              <Link to={`/portal/student/enrol/${c.slug}`} className="flex-1 c-button c-button--primary !py-2 text-center">
                 Enrol
               </Link>
               <Link to={`/learn/${c.slug}`} className="c-button c-button--secondary !py-2">

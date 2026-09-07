@@ -173,7 +173,7 @@ export default function QuizRunner() {
           </div>
           <div className="flex items-center gap-3 text-sm">
             {timeLeft != null && (
-              <span className={cn('flex items-center gap-1 rounded-md px-2.5 py-1.5 font-mono text-sm font-bold', timeLeft < 60 ? 'bg-red-50 text-red-700' : 'bg-band text-heading')}>
+              <span className={cn('flex items-center gap-1 rounded-sm px-2.5 py-1.5 font-mono text-sm font-bold', timeLeft < 60 ? 'bg-red-50 text-red-700' : 'bg-band text-heading')}>
                 <Icon name="clock" className="c-icon--xs" />
                 {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
               </span>
@@ -311,7 +311,7 @@ function ShortAnswer({ value, onChange }) {
       value={value || ''}
       onChange={(e) => onChange(e.target.value)}
       placeholder="Type your answer…"
-      className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent"
+      className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent"
     />
   );
 }
@@ -325,7 +325,7 @@ function Essay({ value, onChange, item }) {
         onChange={(e) => onChange(e.target.value)}
         onPaste={(e) => e.preventDefault()}
         placeholder="Write your response here. Pasting is disabled to keep this your own work."
-        className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent"
+        className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent"
       />
       {item.wordLimit && (
         <p className="mt-1 text-xs text-body/70">Up to {item.wordLimit} words.</p>

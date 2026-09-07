@@ -20,10 +20,12 @@ export default function PortalLoginPage() {
       <div className="c-container relative flex min-h-screen flex-col">
         <header className="flex items-center justify-between py-6">
           <Link to="/" className="flex items-center gap-3">
-            <img src="/crest.svg" alt="" width="40" height="40" />
+            <span className="grid size-10 place-items-center rounded-md bg-cyan shadow-[0_0_0_2px_rgba(38,210,255,0.35)]" aria-hidden>
+              <img src="/crest.svg" alt="" width="28" height="28" className="h-7 w-auto" />
+            </span>
             <div>
-              <p className="font-heading text-base leading-tight text-heading">{brand.name}</p>
-              <p className="text-[10px] uppercase tracking-widest text-cyan">Learner portal</p>
+              <p className="font-heading text-base font-semibold leading-tight text-cyan tracking-tight">{brand.name}</p>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/75">Learner portal</p>
             </div>
           </Link>
           <Link to="/" className="flex items-center gap-2 text-sm text-cyan hover:text-white">
@@ -57,7 +59,7 @@ export default function PortalLoginPage() {
           <div className="w-full max-w-md justify-self-center lg:justify-self-end">
             <div className="rounded-2xl bg-white p-6 text-royal shadow-2xl ring-1 ring-white/20 md:p-8">
               {/* Tabs */}
-              <div role="tablist" aria-label="Portal access" className="mb-6 grid grid-cols-2 gap-1 rounded-lg bg-off-white-50 p-1.5">
+              <div role="tablist" aria-label="Portal access" className="mb-6 grid grid-cols-2 gap-1 rounded-md bg-off-white-50 p-1.5">
                 {[
                   ['signin', 'Sign in'],
                   ['signup', 'Create account'],
@@ -69,7 +71,7 @@ export default function PortalLoginPage() {
                     aria-selected={mode === id}
                     onClick={() => (id === 'signup' ? navigate('/portal/signup') : setMode(id))}
                     className={cn(
-                      'rounded-md py-2 text-sm font-semibold transition-colors',
+                      'rounded-sm py-2 text-sm font-semibold transition-colors',
                       mode === id ? 'bg-accent text-white shadow-sm' : 'text-body hover:text-heading'
                     )}
                   >
@@ -125,7 +127,7 @@ function SignInForm() {
       <h2 className="h3 mb-1 text-heading">Sign in to the portal</h2>
       <p className="mb-6 text-sm text-body">Choose a role to auto-fill the demo account, or sign in with your own.</p>
 
-      <div role="tablist" aria-label="Portal role" className="mb-6 grid grid-cols-3 gap-2 rounded-lg bg-off-white-50 p-1.5">
+      <div role="tablist" aria-label="Portal role" className="mb-6 grid grid-cols-3 gap-2 rounded-md bg-off-white-50 p-1.5">
         {['admin', 'teacher', 'student'].map((r) => (
           <button
             key={r}
@@ -134,7 +136,7 @@ function SignInForm() {
             aria-selected={role === r}
             onClick={() => pickRole(r)}
             className={cn(
-              'rounded-md py-2 text-sm font-semibold transition-colors',
+              'rounded-sm py-2 text-sm font-semibold transition-colors',
               role === r ? 'bg-accent text-white shadow-sm' : 'text-body hover:text-heading'
             )}
           >
@@ -173,7 +175,7 @@ function SignInForm() {
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-md bg-accent py-3 font-semibold text-white transition-colors hover:bg-brand disabled:opacity-60"
+          className="w-full rounded-sm bg-accent py-3 font-semibold text-white transition-colors hover:bg-brand disabled:opacity-60"
         >
           {busy ? 'Signing in…' : 'Sign in'}
         </button>
@@ -218,7 +220,7 @@ function SignupTeaser() {
           </li>
         ))}
       </ul>
-      <Link to="/portal/signup" className="mt-6 block w-full rounded-md bg-accent py-3 text-center font-semibold text-white transition-colors hover:bg-brand">
+      <Link to="/portal/signup" className="mt-6 block w-full rounded-sm bg-accent py-3 text-center font-semibold text-white transition-colors hover:bg-brand">
         Start sign-up →
       </Link>
       <p className="mt-4 text-center text-xs text-body/70">

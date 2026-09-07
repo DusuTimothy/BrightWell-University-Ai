@@ -83,7 +83,7 @@ export default function NewQuiz() {
               type="button"
               onClick={() => setStep(id)}
               className={cn(
-                'flex shrink-0 items-center gap-2 rounded-md px-3 py-1.5 text-sm font-semibold transition-colors',
+                'flex shrink-0 items-center gap-2 rounded-sm px-3 py-1.5 text-sm font-semibold transition-colors',
                 step === id ? 'bg-accent text-white shadow-sm' : 'text-body hover:bg-paper hover:text-heading'
               )}
             >
@@ -98,15 +98,15 @@ export default function NewQuiz() {
             <div className="flex flex-col gap-5">
               <label className="block">
                 <span className="mb-1.5 block text-sm font-semibold">Title <span className="text-red-500">*</span></span>
-                <input type="text" value={draft.title} onChange={(e) => patch({ title: e.target.value })} placeholder="e.g. Core Mathematics — Unit test" className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent" />
+                <input type="text" value={draft.title} onChange={(e) => patch({ title: e.target.value })} placeholder="e.g. Core Mathematics — Unit test" className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent" />
               </label>
               <label className="block">
                 <span className="mb-1.5 block text-sm font-semibold">Description</span>
-                <textarea value={draft.description} onChange={(e) => patch({ description: e.target.value })} rows={2} className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent" />
+                <textarea value={draft.description} onChange={(e) => patch({ description: e.target.value })} rows={2} className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent" />
               </label>
               <label className="block">
                 <span className="mb-1.5 block text-sm font-semibold">Course</span>
-                <select value={draft.courseId} onChange={(e) => patch({ courseId: e.target.value })} className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent">
+                <select value={draft.courseId} onChange={(e) => patch({ courseId: e.target.value })} className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent">
                   {learningCourses.map((c) => (
                     <option key={c.slug} value={c.slug}>{c.title}</option>
                   ))}
@@ -121,7 +121,7 @@ export default function NewQuiz() {
                       type="button"
                       onClick={() => patch({ type: t })}
                       className={cn(
-                        'rounded-md border-2 px-4 py-2 text-sm font-semibold capitalize',
+                        'rounded-sm border-2 px-4 py-2 text-sm font-semibold capitalize',
                         draft.type === t ? 'border-accent bg-accent/10 text-accent' : 'border-line bg-paper text-body hover:border-accent/60'
                       )}
                     >
@@ -145,21 +145,21 @@ export default function NewQuiz() {
               <Card className="p-4">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-body/70">Time limit</p>
                 <div className="flex items-center gap-3">
-                  <input type="number" min="1" value={draft.rules.timeLimitMin} onChange={(e) => patchRules({ timeLimitMin: Number(e.target.value) })} className="w-24 rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+                  <input type="number" min="1" value={draft.rules.timeLimitMin} onChange={(e) => patchRules({ timeLimitMin: Number(e.target.value) })} className="w-24 rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
                   <span className="text-sm text-body">minutes (0 for no limit)</span>
                 </div>
               </Card>
               <Card className="p-4">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-body/70">Attempts allowed</p>
                 <div className="flex items-center gap-3">
-                  <input type="number" min="1" value={draft.rules.attempts} onChange={(e) => patchRules({ attempts: Number(e.target.value) })} className="w-24 rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+                  <input type="number" min="1" value={draft.rules.attempts} onChange={(e) => patchRules({ attempts: Number(e.target.value) })} className="w-24 rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
                   <span className="text-sm text-body">(0 for unlimited)</span>
                 </div>
               </Card>
               <Card className="p-4">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-body/70">Passing score</p>
                 <div className="flex items-center gap-3">
-                  <input type="number" min="0" max="100" value={draft.rules.passingScore} onChange={(e) => patchRules({ passingScore: Number(e.target.value) })} className="w-24 rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+                  <input type="number" min="0" max="100" value={draft.rules.passingScore} onChange={(e) => patchRules({ passingScore: Number(e.target.value) })} className="w-24 rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
                   <span className="text-sm text-body">percent</span>
                 </div>
               </Card>
@@ -178,11 +178,11 @@ export default function NewQuiz() {
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="block">
                 <span className="mb-1.5 block text-sm font-semibold">Opens</span>
-                <input type="date" value={draft.availability.from || ''} onChange={(e) => patchAvail({ from: e.target.value })} className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent" />
+                <input type="date" value={draft.availability.from || ''} onChange={(e) => patchAvail({ from: e.target.value })} className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent" />
               </label>
               <label className="block">
                 <span className="mb-1.5 block text-sm font-semibold">Closes</span>
-                <input type="date" value={draft.availability.until || ''} onChange={(e) => patchAvail({ until: e.target.value })} className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent" />
+                <input type="date" value={draft.availability.until || ''} onChange={(e) => patchAvail({ until: e.target.value })} className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent" />
               </label>
               <Card className="p-4 sm:col-span-2">
                 <p className="text-sm font-semibold text-heading">Anti-cheat defaults</p>
@@ -197,7 +197,7 @@ export default function NewQuiz() {
                   </li>
                   <li className="flex items-center justify-between">
                     <span>Auto-submit after
-                      <input type="number" min="1" max="20" value={draft.antiCheat.maxFocusLosses} onChange={(e) => patchAntiCheat({ maxFocusLosses: Number(e.target.value) })} className="mx-1 w-12 rounded-md border border-line bg-paper px-1 py-0.5 text-sm outline-none focus:border-accent" />
+                      <input type="number" min="1" max="20" value={draft.antiCheat.maxFocusLosses} onChange={(e) => patchAntiCheat({ maxFocusLosses: Number(e.target.value) })} className="mx-1 w-12 rounded-sm border border-line bg-paper px-1 py-0.5 text-sm outline-none focus:border-accent" />
                       focus losses</span>
                     <Badge tone="muted">Auto-flagged</Badge>
                   </li>
@@ -232,7 +232,7 @@ export default function NewQuiz() {
 
 function Row({ k, v }) {
   return (
-    <div className="flex items-center justify-between rounded-md bg-band/30 px-4 py-2.5">
+    <div className="flex items-center justify-between rounded-sm bg-band/30 px-4 py-2.5">
       <span className="text-body/80">{k}</span>
       <span className="font-semibold text-heading">{v}</span>
     </div>
@@ -248,7 +248,7 @@ function Segmented({ value, onChange, options }) {
           type="button"
           onClick={() => onChange(id)}
           className={cn(
-            'rounded-md px-3 py-1.5 text-xs font-semibold transition-colors',
+            'rounded-sm px-3 py-1.5 text-xs font-semibold transition-colors',
             value === id ? 'bg-accent text-white shadow-sm' : 'text-body hover:text-heading'
           )}
         >

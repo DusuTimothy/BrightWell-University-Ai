@@ -42,28 +42,26 @@ export default function HomePage() {
   return (
     <>
       {/* ========================================================= HERO */}
-      <section className="dark relative overflow-hidden bg-brand text-white">
-        <div className="absolute inset-0">
-          <img src={IMG.hero} alt="" className="h-full w-full object-cover opacity-30" />
-        </div>
-        <div className="absolute inset-0 hero-scrim" />
+      <section className="dark relative isolate overflow-hidden bg-brand text-white">
+        <img src={IMG.heroOverlay} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand/80 via-brand/55 to-brand/85" aria-hidden />
+        <div aria-hidden className="absolute inset-0 hero-grid-bg opacity-50" />
 
-        <div className="c-container relative grid items-center gap-10 py-24 md:grid-cols-12 md:py-32">
-          <div className="md:col-span-7">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-cyan">
-              <span className="size-1.5 rounded-full bg-cyan" />
-              New term enrolments open
-            </span>
-            <h1 className="h1 mt-5 text-heading md:whitespace-nowrap" style={{ fontSize: 'clamp(2.4rem, 1.4rem + 4.2vw, 4.5rem)' }}>
+        <div className="c-container relative flex min-h-[80vh] flex-col items-center justify-center py-24 text-center md:py-32">
+          <div className="max-w-3xl">
+            <h1
+              className="h1 text-heading drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)]"
+              style={{ fontSize: 'clamp(2.4rem, 1.4rem + 4.2vw, 4.5rem)' }}
+            >
               Learn what you love,
               <br />
               at a pace that fits.
             </h1>
-            <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-navy-body">
+            <p className="mx-auto mt-5 max-w-[52ch] text-lg leading-relaxed text-white/90">
               Brightwell Academy is a focused online learning platform for secondary-school and university study.
               Watch video lessons, take quizzes and submit assignments — all in one place.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link to="/courses" className="c-button c-button--primary">
                 Browse courses
                 <Icon name="arrow" className="c-icon--sm" />
@@ -72,45 +70,20 @@ export default function HomePage() {
                 {user ? 'Go to your dashboard' : 'Sign in'}
               </Link>
             </div>
-
-            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-5">
-              {stats.map((s) => (
-                <div key={s.label} className="border-l border-white/15 pl-4">
-                  <dt className="text-xs text-white/70">{s.label}</dt>
-                  <dd className="mt-1 font-heading text-xl text-heading">{s.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          <div className="md:col-span-5">
-            <div className="relative">
-              <div className="absolute -left-4 -top-4 size-20 rounded-full bg-cyan/20 blur-2xl" aria-hidden />
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-brand-soft/50 shadow-2xl">
-                <img src={IMG.heroOverlay} alt="" className="aspect-[4/3] w-full object-cover" />
-                <div className="space-y-3 p-5">
-                  <div className="flex items-center gap-3">
-                    <span className="grid size-10 place-items-center rounded-full bg-cyan text-brand">
-                      <Icon name="play" className="c-icon--sm" />
-                    </span>
-                    <div className="flex-1">
-                      <p className="text-xs text-white/70">Now playing</p>
-                      <p className="text-sm font-semibold">Quadratic expressions</p>
-                    </div>
-                    <span className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-cyan">20 min</span>
-                  </div>
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                    <div className="h-full w-2/3 rounded-full bg-cyan" />
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-white/70">
-                    <span>Lesson 3 of 12</span>
-                    <span>66% complete</span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
+
+        {/* Stats pinned to bottom edge */}
+        <dl className="relative z-10 mx-auto w-full max-w-6xl border-t border-white/15 bg-brand/60 px-6 py-5 backdrop-blur-sm">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-5">
+            {stats.map((s) => (
+              <div key={s.label} className="border-l border-white/20 pl-4 text-left">
+                <dt className="text-xs text-white/75">{s.label}</dt>
+                <dd className="mt-1 font-heading text-xl text-heading">{s.value}</dd>
+              </div>
+            ))}
+          </div>
+        </dl>
       </section>
 
       {/* ========================================================= PILLARS */}

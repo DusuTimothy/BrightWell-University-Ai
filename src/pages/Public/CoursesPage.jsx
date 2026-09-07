@@ -93,8 +93,8 @@ export default function CoursesPage() {
                 type="button"
                 onClick={() => { setBranch(b.id); setLevel('all'); }}
                 className={cn(
-                  'rounded-md px-5 py-3 text-left transition-colors',
-                  branch === b.id ? 'bg-brand text-cyan ring-2 ring-accent' : 'bg-paper text-body ring-1 ring-line hover:text-accent'
+'rounded-sm px-5 py-3 text-left transition-colors',
+                branch === b.id ? 'bg-brand text-cyan ring-2 ring-accent' : 'bg-paper text-body ring-1 ring-line hover:text-accent'
                 )}
               >
                 <span className="block text-sm font-semibold">{b.label}</span>
@@ -116,8 +116,8 @@ export default function CoursesPage() {
                     type="button"
                     onClick={() => setLevel(l)}
                     className={cn(
-                      'rounded-md px-4 py-2 text-sm font-semibold transition-colors',
-                      level === l ? 'bg-brand text-cyan' : 'bg-paper text-body ring-1 ring-line hover:text-accent'
+'rounded-sm px-4 py-2 text-sm font-semibold transition-colors',
+                    level === l ? 'bg-brand text-cyan' : 'bg-paper text-body ring-1 ring-line hover:text-accent'
                     )}
                   >
                     {l === 'all' ? 'All levels' : l === 'JSS' ? 'Junior Secondary' : l === 'SSS' ? 'Senior Secondary' : l}

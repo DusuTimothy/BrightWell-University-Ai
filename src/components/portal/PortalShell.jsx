@@ -79,8 +79,10 @@ export default function PortalShell({ role }) {
       <div className="lg:hidden">
         <div className="dark flex items-center justify-between bg-brand px-4 py-3 text-white">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/crest.svg" alt="" width="30" height="30" />
-            <span className="font-heading text-sm">{brand.name}</span>
+            <span className="grid size-9 place-items-center rounded-md bg-cyan shadow-[0_0_0_2px_rgba(38,210,255,0.35)]" aria-hidden>
+              <img src="/crest.svg" alt="" width="26" height="26" className="h-6 w-auto" />
+            </span>
+            <span className="font-heading text-sm font-semibold text-cyan">{brand.name}</span>
           </Link>
           <div className="flex items-center gap-2">
             <RoleBadge role={role} />
@@ -107,10 +109,12 @@ export default function PortalShell({ role }) {
         <aside className="dark sticky top-0 hidden h-screen flex-col overflow-y-auto bg-brand py-6 text-white lg:flex">
           <div className="px-5">
             <Link to="/" className="flex items-center gap-3">
-              <img src="/crest.svg" alt="" width="40" height="40" />
+              <span className="grid size-10 place-items-center rounded-md bg-cyan shadow-[0_0_0_2px_rgba(38,210,255,0.35)]" aria-hidden>
+                <img src="/crest.svg" alt="" width="28" height="28" className="h-7 w-auto" />
+              </span>
               <div>
-                <p className="font-heading text-base leading-tight text-heading">{brand.name}</p>
-                <p className="text-[10px] uppercase tracking-widest text-cyan">Learner portal</p>
+                <p className="font-heading text-base font-semibold leading-tight text-cyan tracking-tight">{brand.name}</p>
+                <p className="text-[10px] uppercase tracking-[0.18em] text-white/75">Learner portal</p>
               </div>
             </Link>
           </div>

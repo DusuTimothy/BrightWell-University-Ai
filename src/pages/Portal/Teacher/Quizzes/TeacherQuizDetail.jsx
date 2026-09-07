@@ -69,7 +69,7 @@ export default function TeacherQuizDetail() {
               <Icon name="play" className="c-icon--sm" />
               Preview
             </Link>
-            <button type="button" onClick={remove} className="rounded-md border border-red-300 bg-paper px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50">
+            <button type="button" onClick={remove} className="rounded-sm border border-red-300 bg-paper px-3 py-2 text-sm font-semibold text-red-600 hover:bg-red-50">
               Delete
             </button>
           </div>
@@ -82,7 +82,7 @@ export default function TeacherQuizDetail() {
               type="button"
               onClick={() => setTab(id)}
               className={cn(
-                'flex shrink-0 items-center gap-2 rounded-md px-3 py-1.5 text-sm font-semibold transition-colors',
+                'flex shrink-0 items-center gap-2 rounded-sm px-3 py-1.5 text-sm font-semibold transition-colors',
                 tab === id ? 'bg-accent text-white shadow-sm' : 'text-body hover:bg-paper hover:text-heading'
               )}
             >
@@ -254,7 +254,7 @@ function AddFromBank({ onAdd }) {
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search your bank…"
-        className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+        className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
       />
       <ul className="mt-2 flex max-h-64 flex-col gap-1 overflow-y-auto">
         {filtered.map((b) => (
@@ -286,20 +286,20 @@ function RulesPanel({ quiz, patch }) {
         <Group title="Time limit">
           <ToggleRow checked={!rules.timeLimitMin} onChange={(c) => setRule('timeLimitMin', c ? null : 20)} label="No limit" />
           <ToggleRow checked={!!rules.timeLimitMin} onChange={(c) => setRule('timeLimitMin', c ? 30 : null)} label="Time limit" suffix={
-            <input type="number" min="1" value={rules.timeLimitMin || 30} onChange={(e) => setRule('timeLimitMin', Number(e.target.value))} className="w-20 rounded-md border border-line bg-paper px-2 py-1 text-sm outline-none focus:border-accent" />
+            <input type="number" min="1" value={rules.timeLimitMin || 30} onChange={(e) => setRule('timeLimitMin', Number(e.target.value))} className="w-20 rounded-sm border border-line bg-paper px-2 py-1 text-sm outline-none focus:border-accent" />
           } suffix2="minutes" />
         </Group>
 
         <Group title="Attempts">
           <ToggleRow checked={!rules.attempts} onChange={(c) => setRule('attempts', c ? null : 3)} label="Unlimited" />
           <ToggleRow checked={!!rules.attempts} onChange={(c) => setRule('attempts', c ? 3 : null)} label="Maximum" suffix={
-            <input type="number" min="1" value={rules.attempts || 3} onChange={(e) => setRule('attempts', Number(e.target.value))} className="w-20 rounded-md border border-line bg-paper px-2 py-1 text-sm outline-none focus:border-accent" />
+            <input type="number" min="1" value={rules.attempts || 3} onChange={(e) => setRule('attempts', Number(e.target.value))} className="w-20 rounded-sm border border-line bg-paper px-2 py-1 text-sm outline-none focus:border-accent" />
           } suffix2="attempts" />
         </Group>
 
         <Group title="Passing score">
           <div className="flex items-center gap-3">
-            <input type="number" min="0" max="100" value={rules.passingScore ?? 50} onChange={(e) => setRule('passingScore', Number(e.target.value))} className="w-24 rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+            <input type="number" min="0" max="100" value={rules.passingScore ?? 50} onChange={(e) => setRule('passingScore', Number(e.target.value))} className="w-24 rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
             <span className="text-sm text-body">percent (used for certificate gate)</span>
           </div>
         </Group>
@@ -309,7 +309,7 @@ function RulesPanel({ quiz, patch }) {
           <ToggleRow checked={!!quiz.poolSize} onChange={(c) => patch({ poolSize: c ? { size: quiz.questions.length, draw: Math.max(1, Math.floor(quiz.questions.length / 2)) } : null })} label="Random" suffix={
             quiz.poolSize ? (
               <>
-                <input type="number" min="1" value={quiz.poolSize.draw} onChange={(e) => setRule('poolDraw', Number(e.target.value))} className="w-16 rounded-md border border-line bg-paper px-2 py-1 text-sm outline-none focus:border-accent" />
+                <input type="number" min="1" value={quiz.poolSize.draw} onChange={(e) => setRule('poolDraw', Number(e.target.value))} className="w-16 rounded-sm border border-line bg-paper px-2 py-1 text-sm outline-none focus:border-accent" />
                 <span className="text-xs text-body/70">of {quiz.poolSize.size}</span>
               </>
             ) : null
@@ -345,11 +345,11 @@ function AvailabilityPanel({ quiz, patch }) {
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-body/70">Opens</span>
-          <input type="date" value={a.from || ''} onChange={(e) => patch({ availability: { ...a, from: e.target.value } })} className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+          <input type="date" value={a.from || ''} onChange={(e) => patch({ availability: { ...a, from: e.target.value } })} className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
         </label>
         <label className="block">
           <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-body/70">Closes</span>
-          <input type="date" value={a.until || ''} onChange={(e) => patch({ availability: { ...a, until: e.target.value } })} className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+          <input type="date" value={a.until || ''} onChange={(e) => patch({ availability: { ...a, until: e.target.value } })} className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
         </label>
       </div>
       <div className="mt-4 flex items-center gap-3 rounded-lg bg-band/40 p-4 text-sm text-body">
@@ -379,7 +379,7 @@ function AntiCheatPanel({ quiz, patch }) {
           <p className="text-sm font-semibold text-heading">Auto-submit threshold</p>
           <p className="mt-1 text-xs text-body">After this many focus losses, the quiz auto-submits and the attempt is flagged for review.</p>
           <div className="mt-2 flex items-center gap-3">
-            <input type="number" min="1" max="20" value={ac.maxFocusLosses ?? 3} onChange={(e) => setAC('maxFocusLosses', Number(e.target.value))} className="w-20 rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+            <input type="number" min="1" max="20" value={ac.maxFocusLosses ?? 3} onChange={(e) => setAC('maxFocusLosses', Number(e.target.value))} className="w-20 rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
             <span className="text-sm text-body">focus losses</span>
           </div>
         </li>
@@ -497,12 +497,12 @@ function ManualGradeCard({ attempt, questionIndex, grading }) {
       <div className="mt-4 grid gap-3 sm:grid-cols-3">
         <label className="block sm:col-span-1">
           <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-body/70">Points</span>
-          <input type="number" min="0" max={grading.points} value={points} onChange={(e) => setPoints(Number(e.target.value))} className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+          <input type="number" min="0" max={grading.points} value={points} onChange={(e) => setPoints(Number(e.target.value))} className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
           <span className="mt-1 block text-xs text-body/70">/ {grading.points}</span>
         </label>
         <label className="block sm:col-span-2">
           <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-body/70">Comment</span>
-          <textarea value={comment} onChange={(e) => setComment(e.target.value)} rows={3} className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+          <textarea value={comment} onChange={(e) => setComment(e.target.value)} rows={3} className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
         </label>
       </div>
       <div className="mt-3 flex justify-end gap-2">
@@ -639,7 +639,7 @@ function Segmented({ value, options, onChange }) {
           type="button"
           onClick={() => onChange(id)}
           className={cn(
-            'rounded-md px-3 py-1.5 text-xs font-semibold transition-colors',
+            'rounded-sm px-3 py-1.5 text-xs font-semibold transition-colors',
             value === id ? 'bg-accent text-white shadow-sm' : 'text-body hover:text-heading'
           )}
         >

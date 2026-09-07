@@ -26,6 +26,7 @@ const StudentLearningCourse = lazy(() => import('./pages/Portal/Student/StudentL
 const StudentLessonPlayer = lazy(() => import('./pages/Portal/Student/StudentLessonPlayer.jsx'));
 const StudentQuiz = lazy(() => import('./pages/Portal/Student/StudentQuiz.jsx'));
 const StudentAssignments = lazy(() => import('./pages/Portal/Student/StudentAssignments.jsx'));
+const StudentEnrol = lazy(() => import('./pages/Portal/Student/StudentEnrol.jsx'));
 const StudentQuizRunner = lazy(() => import('./pages/Portal/Student/QuizRunner.jsx'));
 const StudentQuizHistory = lazy(() => import('./pages/Portal/Student/StudentQuizHistory.jsx'));
 const StudentWishlist = lazy(() => import('./pages/Portal/Student/StudentWishlist.jsx'));
@@ -165,6 +166,7 @@ export default function App() {
             <Route path="courses/:slug/:lessonId" element={<StudentLessonPlayer />} />
             <Route path="courses/:slug/quiz" element={<StudentQuiz />} />
             <Route path="courses/:slug/assignments" element={<StudentAssignments />} />
+            <Route path="enrol/:slug" element={<StudentEnrol />} />
             <Route path="wishlist" element={<StudentWishlist />} />
             <Route path="certificates" element={<StudentCertificates />} />
             <Route path="browse" element={<StudentBrowse />} />

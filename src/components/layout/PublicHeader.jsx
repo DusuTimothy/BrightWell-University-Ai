@@ -110,10 +110,19 @@ export default function PublicHeader() {
       <div className="relative border-b border-white/10">
         <div className="c-container flex items-center gap-4 py-4">
           <Link to="/" className="flex items-center gap-3" aria-label={`${brand.name} home`}>
-            <img src="/crest.svg" alt="" width="40" height="40" className="h-10 w-auto" />
+            <span
+              className="grid size-10 place-items-center rounded-md bg-cyan shadow-[0_0_0_2px_rgba(38,210,255,0.35),0_4px_14px_-4px_rgba(38,210,255,0.55)]"
+              aria-hidden
+            >
+              <img src="/crest.svg" alt="" width="28" height="28" className="h-7 w-auto" />
+            </span>
             <div className="hidden sm:block">
-              <p className="font-heading text-base leading-tight text-heading">{brand.name}</p>
-              <p className="text-[10px] uppercase tracking-widest text-cyan">E-learning platform</p>
+              <p className="font-heading text-base font-semibold leading-tight text-cyan tracking-tight drop-shadow-[0_1px_2px_rgba(0,33,71,0.45)]">
+                {brand.name}
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/75">
+                E-learning platform
+              </p>
             </div>
           </Link>
 

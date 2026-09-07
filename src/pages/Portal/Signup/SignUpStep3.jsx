@@ -142,7 +142,7 @@ export default function SignUpStep3() {
         </div>
 
         {error && (
-          <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm font-medium text-red-600 ring-1 ring-red-100">
+          <p role="alert" className="rounded-sm bg-red-50 px-3 py-2 text-sm font-medium text-red-600 ring-1 ring-red-100">
             {error}
           </p>
         )}
@@ -154,7 +154,7 @@ export default function SignUpStep3() {
           <button
             type="submit"
             disabled={busy}
-            className="inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-brand disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-sm bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-brand disabled:opacity-60"
           >
             {busy ? 'Creating…' : 'Create my account'}
             <Icon name="arrow" className="c-icon--sm" />

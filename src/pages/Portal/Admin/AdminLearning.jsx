@@ -41,7 +41,7 @@ export default function AdminLearning() {
                 type="button"
                 onClick={() => setBranch(id)}
                 className={
-                  'rounded-md px-3 py-1.5 text-sm font-semibold capitalize transition-colors ' +
+                  'rounded-sm px-3 py-1.5 text-sm font-semibold capitalize transition-colors ' +
                   (branch === id ? 'bg-accent text-white' : 'text-body hover:text-heading')
                 }
               >

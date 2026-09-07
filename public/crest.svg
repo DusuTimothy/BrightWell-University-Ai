@@ -1,22 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" role="img" aria-label="Brightwell University crest">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" role="img" aria-label="Brightwell Academy crest">
   <defs>
     <linearGradient id="bw-g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0a2f63"/>
-      <stop offset="1" stop-color="#002147"/>
+      <stop offset="0" stop-color="#1d4ed8"/>
+      <stop offset="1" stop-color="#0a2f63"/>
     </linearGradient>
   </defs>
   <!-- Shield -->
-  <path d="M44 4 82 14v30c0 16-8 27-38 36C14 71 6 60 6 44V14Z" fill="url(#bw-g)" stroke="#26d2ff" stroke-width="2"/>
-  <path d="M44 10 76 18.5V44c0 13.5-6.8 23-32 31C18.8 67 12 57.5 12 44V18.5Z" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="1.5"/>
+  <path d="M44 4 82 14v30c0 16-8 27-38 36C14 71 6 60 6 44V14Z" fill="url(#bw-g)" stroke="#26d2ff" stroke-width="2.5"/>
+  <path d="M44 10 76 18.5V44c0 13.5-6.8 23-32 31C18.8 67 12 57.5 12 44V18.5Z" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="1.5"/>
   <!-- Open book -->
-  <path d="M20 34c8-3 14-3.4 24 1.8C54 30.6 60 31 68 34v22c-8-3-14-3.4-24 1.8C34 53.6 28 53 20 56Z" fill="#fff"/>
-  <path d="M44 35.8v22" stroke="#0a2f63" stroke-width="2"/>
-  <path d="M20 34c8-3 14-3.4 24 1.8" fill="none" stroke="#0a2f63" stroke-width="2"/>
+  <path d="M20 34c8-3 14-3.4 24 1.8C54 30.6 60 31 68 34v22c-8-3-14-3.4-24 1.8C34 53.6 28 53 20 56Z" fill="#ffffff"/>
+  <path d="M44 35.8v22" stroke="#1d4ed8" stroke-width="2"/>
+  <path d="M20 34c8-3 14-3.4 24 1.8" fill="none" stroke="#1d4ed8" stroke-width="2"/>
   <!-- Open book pages -->
-  <path d="M20 36c8-2.6 14-2.8 23 1.4M68 36c-8-2.6-14-2.8-23 1.4" stroke="#b9d6f2" stroke-width="1.4" fill="none"/>
+  <path d="M20 36c8-2.6 14-2.8 23 1.4M68 36c-8-2.6-14-2.8-23 1.4" stroke="#9ec3ff" stroke-width="1.4" fill="none"/>
   <!-- Wiggle flags -->
-  <path d="M14 39h5l2 3 2-3h5M62 39h5l2 3 2-3h5" stroke="#26d2ff" stroke-width="2" fill="none"/>
+  <path d="M14 39h5l2 3 2-3h5M62 39h5l2 3 2-3h5" stroke="#26d2ff" stroke-width="2.2" fill="none"/>
   <!-- Radiant line under book -->
-  <path d="M34 62h20" stroke="#26d2ff" stroke-width="2" stroke-linecap="round"/>
-  <path d="M30 66h28" stroke="#ffffff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round"/>
+  <path d="M34 62h20" stroke="#26d2ff" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M30 66h28" stroke="#ffffff" stroke-opacity=".85" stroke-width="2" stroke-linecap="round"/>
 </svg>

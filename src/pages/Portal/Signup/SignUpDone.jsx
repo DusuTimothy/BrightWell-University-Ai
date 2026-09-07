@@ -21,10 +21,12 @@ export default function SignUpDone() {
       <div className="c-container relative flex min-h-screen flex-col">
         <header className="flex items-center justify-between py-6">
           <Link to="/" className="flex items-center gap-3">
-            <img src="/crest.svg" alt="" width="40" height="40" />
+            <span className="grid size-10 place-items-center rounded-md bg-cyan shadow-[0_0_0_2px_rgba(38,210,255,0.35)]" aria-hidden>
+              <img src="/crest.svg" alt="" width="28" height="28" className="h-7 w-auto" />
+            </span>
             <div>
-              <p className="font-heading text-base leading-tight text-heading">{brand.name}</p>
-              <p className="text-[10px] uppercase tracking-widest text-cyan">Welcome</p>
+              <p className="font-heading text-base font-semibold leading-tight text-cyan tracking-tight">{brand.name}</p>
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/75">Welcome</p>
             </div>
           </Link>
         </header>

@@ -3,11 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader.jsx';
 import { Section, Icon } from '../../components/ui/Kit.jsx';
 import { getLearningCourse, allLessons, courseDuration, learningCourses, levelLabel, branchById } from '../../data/learning.js';
+import { getPortalUser, ROLE_HOMES } from '../../lib/portalAuth.js';
 import NotFoundPage from './NotFoundPage.jsx';
 
 export default function CourseDetailPage() {
   const { slug } = useParams();
   const course = getLearningCourse(slug);
+  const user = getPortalUser();
 
   if (!course) return <NotFoundPage />;
 
@@ -15,6 +17,9 @@ export default function CourseDetailPage() {
   const hours = Math.round(courseDuration(course) / 60);
   const branch = branchById(course.branch);
   const related = learningCourses.filter((c) => c.subject === course.subject && c.slug !== course.slug).slice(0, 4);
+  const enrolTo = user
+    ? (user.role === 'student' ? `/portal/student/enrol/${course.slug}` : `${ROLE_HOMES[user.role]}?enrol=${course.slug}`)
+    : '/portal/login?next=/portal/student/enrol/' + course.slug;
 
   return (
     <>
@@ -133,13 +138,15 @@ export default function CourseDetailPage() {
                   <h2 className="h4 mt-1 text-heading">Enrol to start learning</h2>
                   <p className="mt-2 text-sm text-body">Free for all learners with a Brightwell account.</p>
                 </div>
-                <div className="p-6">
-                  <Link to="/portal/login" className="c-button c-button--primary w-full">
-                    Sign in to enrol
+<div className="p-6">
+                  <Link to={enrolTo} className="c-button c-button--primary w-full">
+                    {user ? 'Enrol & pay' : 'Sign in to enrol'}
                     <Icon name="arrow" className="c-icon--sm" />
                   </Link>
                   <p className="mt-3 text-center text-xs text-body/70">
-                    Your progress is saved automatically across devices.
+                    {user
+                      ? 'Pay securely — your card is tokenised for next time.'
+                      : 'Your progress is saved automatically across devices.'}
                   </p>
                 </div>
               </div>

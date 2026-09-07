@@ -120,7 +120,7 @@ export default function SignUpStep2() {
             <select
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent"
+              className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent"
             >
               <option value="">Select a subject…</option>
               {SUBJECTS.map((s) => (
@@ -139,7 +139,7 @@ export default function SignUpStep2() {
               value={org}
               onChange={(e) => setOrg(e.target.value)}
               placeholder="e.g. Brightwell Academy"
-              className="w-full rounded-md border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent"
+              className="w-full rounded-sm border border-line bg-paper px-4 py-3 text-sm outline-none focus:border-accent"
             />
           </label>
         )}
@@ -153,7 +153,7 @@ export default function SignUpStep2() {
           type="button"
           onClick={next}
           disabled={role === 'teacher' && !subject}
-          className="rounded-md bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-brand disabled:opacity-40"
+          className="rounded-sm bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-brand disabled:opacity-40"
         >
           Continue →
         </button>

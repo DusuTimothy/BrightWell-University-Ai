@@ -92,7 +92,7 @@ export default function QuestionBank() {
             <select
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+              className="rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
             >
               <option value="all">All types</option>
               {Object.entries(TYPE_LABELS).map(([id, label]) => (
@@ -102,7 +102,7 @@ export default function QuestionBank() {
             <select
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value)}
-              className="rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+              className="rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
             >
               <option value="all">All levels</option>
               <option value="easy">Easy</option>
@@ -174,14 +174,14 @@ export default function QuestionBank() {
                   <button
                     type="button"
                     onClick={() => setEditing(item)}
-                    className="rounded-md border border-line bg-paper px-3 py-1.5 text-xs font-semibold hover:bg-band"
+                    className="rounded-sm border border-line bg-paper px-3 py-1.5 text-xs font-semibold hover:bg-band"
                   >
                     Edit
                   </button>
                   <button
                     type="button"
                     onClick={() => handleDelete(item.id)}
-                    className="rounded-md border border-line bg-paper px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50"
+                    className="rounded-sm border border-line bg-paper px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50"
                   >
                     Delete
                   </button>
@@ -220,7 +220,7 @@ function QuestionEditor({ item, onSave, onCancel }) {
       <div className="grid gap-4 sm:grid-cols-3">
         <label className="block sm:col-span-1">
           <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-body/70">Type</span>
-          <select value={draft.type} onChange={(e) => set('type', e.target.value)} className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent">
+          <select value={draft.type} onChange={(e) => set('type', e.target.value)} className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent">
             {Object.entries(TYPE_LABELS).map(([id, label]) => (
               <option key={id} value={id}>{label}</option>
             ))}
@@ -228,11 +228,11 @@ function QuestionEditor({ item, onSave, onCancel }) {
         </label>
         <label className="block sm:col-span-1">
           <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-body/70">Points</span>
-          <input type="number" min="1" value={draft.points || 1} onChange={(e) => set('points', Number(e.target.value))} className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
+          <input type="number" min="1" value={draft.points || 1} onChange={(e) => set('points', Number(e.target.value))} className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent" />
         </label>
         <label className="block sm:col-span-1">
           <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-body/70">Difficulty</span>
-          <select value={draft.difficulty || 'medium'} onChange={(e) => set('difficulty', e.target.value)} className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent">
+          <select value={draft.difficulty || 'medium'} onChange={(e) => set('difficulty', e.target.value)} className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent">
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
@@ -246,7 +246,7 @@ function QuestionEditor({ item, onSave, onCancel }) {
           rows={3}
           value={draft.prompt || ''}
           onChange={(e) => set('prompt', e.target.value)}
-          className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+          className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
         />
       </label>
 
@@ -275,7 +275,7 @@ function QuestionEditor({ item, onSave, onCancel }) {
                     next[i] = e.target.value;
                     set('options', next);
                   }}
-                  className="flex-1 rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+                  className="flex-1 rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
                 />
                 {(draft.options || []).length > 2 && (
                   <button
@@ -314,7 +314,7 @@ function QuestionEditor({ item, onSave, onCancel }) {
                 type="button"
                 onClick={() => set('correct', v)}
                 className={
-                  'rounded-md border-2 px-4 py-2 text-sm font-semibold ' +
+                  'rounded-sm border-2 px-4 py-2 text-sm font-semibold ' +
                   (draft.correct === v ? 'border-accent bg-accent/10 text-accent' : 'border-line bg-paper text-body hover:border-accent/60')
                 }
               >
@@ -332,7 +332,7 @@ function QuestionEditor({ item, onSave, onCancel }) {
             type="text"
             value={(draft.acceptableAnswers || []).join(', ')}
             onChange={(e) => set('acceptableAnswers', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
-            className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+            className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
           />
         </label>
       )}
@@ -344,7 +344,7 @@ function QuestionEditor({ item, onSave, onCancel }) {
             type="number"
             value={draft.wordLimit || ''}
             onChange={(e) => set('wordLimit', Number(e.target.value) || null)}
-            className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+            className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
           />
         </label>
       )}
@@ -356,7 +356,7 @@ function QuestionEditor({ item, onSave, onCancel }) {
           value={(draft.tags || []).join(', ')}
           onChange={(e) => set('tags', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
           placeholder="algebra, equations, …"
-          className="w-full rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
+          className="w-full rounded-sm border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-accent"
         />
       </label>
 

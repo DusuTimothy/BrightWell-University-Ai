@@ -35,7 +35,7 @@ function GradeCell({ student, assignment }) {
           defaultValue={saved ?? defaultGrade}
           onChange={(e) => record(e.target.value)}
           className={cn(
-            'w-16 rounded-md border border-line bg-paper px-2 py-1.5 text-sm outline-none focus:border-accent',
+            'w-16 rounded-sm border border-line bg-paper px-2 py-1.5 text-sm outline-none focus:border-accent',
             flashed && 'border-emerald-400'
           )}
           aria-label={`${assignment.title} grade for ${student.name}`}

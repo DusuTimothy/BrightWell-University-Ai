@@ -83,7 +83,7 @@ export default function StudentAssignments() {
                     value={drafts[a.id] || ''}
                     onChange={(e) => setDrafts((d) => ({ ...d, [a.id]: e.target.value }))}
                     placeholder="Paste your work here, or write a short note about your submission…"
-                    className="w-full rounded-md border border-line bg-paper px-3 py-2.5 text-sm outline-none focus:border-accent"
+                    className="w-full rounded-sm border border-line bg-paper px-3 py-2.5 text-sm outline-none focus:border-accent"
                   />
                   <button type="submit" className="c-button c-button--primary self-start !py-2.5">
                     Submit assignment

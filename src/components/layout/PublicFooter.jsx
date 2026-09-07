@@ -16,10 +16,12 @@ export default function PublicFooter() {
           <div className="grid grid-cols-12 gap-x-6 gap-y-10">
             <div className="col-span-12 lg:col-span-4">
               <Link to="/" className="inline-flex items-center gap-3" aria-label={`${brand.name} home`}>
-                <img src="/crest.svg" alt="" width="56" height="56" className="h-14 w-auto" />
+                <span className="grid size-14 place-items-center rounded-lg bg-brand shadow-[0_0_0_2px_rgba(38,210,255,0.45)]" aria-hidden>
+                  <img src="/crest.svg" alt="" width="44" height="44" className="h-11 w-auto" />
+                </span>
                 <span>
-                  <span className="block font-heading text-lg text-heading">{brand.name}</span>
-                  <span className="block text-[11px] uppercase tracking-widest text-cyan-deep">E-learning platform</span>
+                  <span className="block font-heading text-lg font-semibold text-heading tracking-tight">{brand.name}</span>
+                  <span className="block text-[11px] uppercase tracking-[0.18em] text-accent">E-learning platform</span>
                 </span>
               </Link>
               <p className="mt-4 max-w-[40ch] text-xs leading-relaxed text-body/80">
