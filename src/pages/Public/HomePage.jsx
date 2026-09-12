@@ -42,31 +42,33 @@ export default function HomePage() {
   return (
     <>
       {/* ========================================================= HERO */}
-      <section className="dark relative isolate overflow-hidden bg-brand text-white">
-        <img src={IMG.heroOverlay} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand/80 via-brand/55 to-brand/85" aria-hidden />
-        <div aria-hidden className="absolute inset-0 hero-grid-bg opacity-50" />
+      <section className="dark relative isolate flex h-svh w-full flex-col overflow-hidden bg-brand text-white">
+        <img
+          src={IMG.heroOverlay}
+          alt=""
+          className="absolute inset-0 size-full object-cover object-center"
+        />
 
-        <div className="c-container relative flex min-h-[80vh] flex-col items-center justify-center py-24 text-center md:py-32">
-          <div className="max-w-3xl">
+        <div className="c-container relative z-10 flex flex-1 flex-col items-center justify-center py-24 text-center md:py-32">
+          <div className="px-6 py-8 md:px-10 md:py-12">
             <h1
               className="h1 text-heading drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)]"
-              style={{ fontSize: 'clamp(2.4rem, 1.4rem + 4.2vw, 4.5rem)' }}
+              style={{ fontSize: 'clamp(2.8rem, 1.6rem + 5vw, 5.25rem)' }}
             >
               Learn what you love,
               <br />
               at a pace that fits.
             </h1>
-            <p className="mx-auto mt-5 max-w-[52ch] text-lg leading-relaxed text-white/90">
+            <p className="mx-auto px-8 py-4 mt-6 max-w-[52ch] text-xl leading-relaxed rounded bg-cyan/10 backdrop-blur-2xl md:text-xl font-medium">
               Brightwell Academy is a focused online learning platform for secondary-school and university study.
-              Watch video lessons, take quizzes and submit assignments — all in one place.
+              Watch video lessons, take quizzes and submit assignments all in one place.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link to="/courses" className="c-button c-button--primary">
+            <div className="mt-8 lg:mt-20 flex flex-wrap items-center justify-center gap-3">
+              <Link to="/courses" className="c-button c-button--primary text-lg">
                 Browse courses
                 <Icon name="arrow" className="c-icon--sm" />
               </Link>
-              <Link to="/portal/login" className="c-button c-button--secondary">
+              <Link to="/portal/login" className="c-button c-button--secondary text-lg">
                 {user ? 'Go to your dashboard' : 'Sign in'}
               </Link>
             </div>
@@ -78,8 +80,8 @@ export default function HomePage() {
           <div className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-5">
             {stats.map((s) => (
               <div key={s.label} className="border-l border-white/20 pl-4 text-left">
-                <dt className="text-xs text-white/75">{s.label}</dt>
-                <dd className="mt-1 font-heading text-xl text-heading">{s.value}</dd>
+                <dt className="text-sm text-white/75">{s.label}</dt>
+                <dd className="mt-1 font-heading text-2xl text-heading">{s.value}</dd>
               </div>
             ))}
           </div>
